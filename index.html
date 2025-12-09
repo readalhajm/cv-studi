@@ -251,20 +251,45 @@
       align-items: center;
     }
 
-    nav a {
+    /* العنصر الذي يحتوي عناصر التنقل الفعلية (يمكن إخفاؤه على شاشات صغيرة) */
+    .main-nav {
+      display: flex;
+      gap: var(--spacing-xl);
+      align-items: center;
+    }
+
+    .main-nav a,
+    .main-nav button {
       color: #374151;
       font-weight: 500;
       transition: color 0.3s ease;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
     }
 
-    nav a:hover {
+    .main-nav a:hover,
+    .main-nav button:hover {
       color: var(--primary);
     }
 
-    nav a.active {
+    .main-nav a.active {
       color: var(--primary);
       border-bottom: 2px solid var(--accent);
       padding-bottom: var(--spacing-sm);
+    }
+
+    /* زر الهامبرغر (مختفي على شاشات كبيرة) */
+    .mobile-nav-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      padding: 0.25rem 0.5rem;
+      cursor: pointer;
     }
 
     .lang-toggle {
@@ -275,6 +300,19 @@
       cursor: pointer;
       font-weight: 500;
       color: var(--primary);
+    }
+
+    /* تحكم عرض القائمة على الشاشات الصغيرة */
+    @media (max-width: 768px) {
+      .mobile-nav-toggle { display: block; }
+      .main-nav { display: none; }
+      .main-nav.open {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-md);
+      }
+      nav { width: 100%; }
     }
 
     /* ============================================
@@ -1945,30 +1983,33 @@
                 <span>${t('appTitle')}</span>
               </div>
               <nav>
-                <a href="#" onclick="navigateTo('home')" class="${AppState.currentPage === 'home' ? 'active' : ''}">
-                  ${t('home')}
-                </a>
-                <a href="#" onclick="navigateTo('builder')" class="${AppState.currentPage === 'builder' ? 'active' : ''}">
-                  ${t('builder')}
-                </a>
-                <a href="#" onclick="navigateTo('templates')" class="${AppState.currentPage === 'templates' ? 'active' : ''}">
-                  ${t('templates')}
-                </a>
-                ${AppState.userAuth.isLoggedIn ? `
-                  <a href="#" onclick="navigateTo('dashboard')" class="${AppState.currentPage === 'dashboard' ? 'active' : ''}">
-                    ${t('dashboard')}
+                <button class="mobile-nav-toggle" aria-label="Toggle menu" onclick="toggleMobileNav()">☰</button>
+                <div id="main-nav" class="main-nav">
+                  <a href="#" onclick="navigateTo('home')" class="${AppState.currentPage === 'home' ? 'active' : ''}">
+                    ${t('home')}
                   </a>
-                  <button class="btn btn-outline btn-small" onclick="logout()">
-                    ${t('logout')}
+                  <a href="#" onclick="navigateTo('builder')" class="${AppState.currentPage === 'builder' ? 'active' : ''}">
+                    ${t('builder')}
+                  </a>
+                  <a href="#" onclick="navigateTo('templates')" class="${AppState.currentPage === 'templates' ? 'active' : ''}">
+                    ${t('templates')}
+                  </a>
+                  ${AppState.userAuth.isLoggedIn ? `
+                    <a href="#" onclick="navigateTo('dashboard')" class="${AppState.currentPage === 'dashboard' ? 'active' : ''}">
+                      ${t('dashboard')}
+                    </a>
+                    <button class="btn btn-outline btn-small" onclick="logout()">
+                      ${t('logout')}
+                    </button>
+                  ` : `
+                    <button class="btn btn-primary btn-small" onclick="navigateTo('auth')">
+                      ${t('login')}
+                    </button>
+                  `}
+                  <button class="lang-toggle" onclick="toggleLanguage()">
+                    ${AppState.currentLanguage === 'ar' ? 'EN' : 'AR'}
                   </button>
-                ` : `
-                  <button class="btn btn-primary btn-small" onclick="navigateTo('auth')">
-                    ${t('login')}
-                  </button>
-                `}
-                <button class="lang-toggle" onclick="toggleLanguage()">
-                  ${AppState.currentLanguage === 'ar' ? 'EN' : 'AR'}
-                </button>
+                </div>
               </nav>
             </div>
           </div>
@@ -2495,6 +2536,13 @@
           renderPage();
         });
       }
+    }
+
+    // Toggle main navigation on mobile
+    function toggleMobileNav() {
+      const mainNav = document.getElementById('main-nav');
+      if (!mainNav) return;
+      mainNav.classList.toggle('open');
     }
 
     function updatePageContent() {
