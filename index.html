@@ -9,7 +9,8 @@
   <title>CV Studio - محرر السير الذاتية الاحترافي</title>
   
   <!-- الخطوط -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     /* ============================================
@@ -19,16 +20,22 @@
     :root {
       /* الألوان الأساسية */
       --primary: #0B3D91;
+      --primary-dark: #082E6F;
       --accent: #C99A6B;
+      --accent-dark: #B8885A;
       --background: #F7F8FA;
       --surface: #FFFFFF;
       --muted: #6B7280;
       --success: #10B981;
       --error: #EF4444;
+      --warning: #F59E0B;
       --border: #E5E7EB;
+      --text-primary: #1F2937;
+      --text-secondary: #4B5563;
       
       /* الخطوط */
       --font-family: 'Inter', 'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-size-xs: 0.75rem;
       --font-size-sm: 0.875rem;
       --font-size-base: 1rem;
       --font-size-lg: 1.125rem;
@@ -36,6 +43,7 @@
       --font-size-2xl: 1.5rem;
       --font-size-3xl: 1.875rem;
       --font-size-4xl: 2.25rem;
+      --font-size-5xl: 3rem;
       
       /* المسافات */
       --spacing-xs: 0.25rem;
@@ -44,17 +52,20 @@
       --spacing-lg: 1.5rem;
       --spacing-xl: 2rem;
       --spacing-2xl: 3rem;
+      --spacing-3xl: 4rem;
       
       /* الظلال */
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
       
       /* الزوايا */
       --radius-sm: 0.375rem;
       --radius-md: 0.5rem;
-      --radius-lg: 1rem;
-      --radius-xl: 1.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-2xl: 1.5rem;
     }
 
     /* اتجاه RTL افتراضي */
@@ -78,8 +89,10 @@
       font-family: var(--font-family);
       font-size: var(--font-size-base);
       line-height: 1.6;
-      color: #1F2937;
+      color: var(--text-primary);
       background-color: var(--background);
+      overflow-x: hidden;
+      font-weight: 400;
     }
 
     /* ============================================
@@ -90,29 +103,78 @@
       font-weight: 600;
       line-height: 1.3;
       margin-bottom: var(--spacing-md);
-      color: var(--primary);
+      color: var(--text-primary);
     }
 
-    h1 { font-size: var(--font-size-4xl); }
-    h2 { font-size: var(--font-size-3xl); }
-    h3 { font-size: var(--font-size-2xl); }
-    h4 { font-size: var(--font-size-xl); }
-    h5 { font-size: var(--font-size-lg); }
-    h6 { font-size: var(--font-size-base); }
+    h1 { 
+      font-size: var(--font-size-4xl);
+      font-weight: 700;
+    }
+    
+    h2 { 
+      font-size: var(--font-size-3xl);
+      font-weight: 600;
+    }
+    
+    h3 { 
+      font-size: var(--font-size-2xl);
+      font-weight: 600;
+    }
+    
+    h4 { 
+      font-size: var(--font-size-xl);
+      font-weight: 600;
+    }
+    
+    h5 { 
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+    }
+    
+    h6 { 
+      font-size: var(--font-size-base);
+      font-weight: 600;
+    }
 
     p {
       margin-bottom: var(--spacing-md);
-      color: #374151;
+      color: var(--text-secondary);
     }
+
+    /* ============================================
+       الروابط - تحسينات شاملة
+       ============================================ */
 
     a {
       color: var(--primary);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
+      position: relative;
     }
 
     a:hover {
-      color: var(--accent);
+      color: var(--primary-dark);
+    }
+
+    /* تأثير الخط السفلي المتحرك */
+    .nav-link {
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
     }
 
     /* ============================================
@@ -133,26 +195,48 @@
       transition: all 0.3s ease;
       text-decoration: none;
       white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover::before {
+      transform: translateX(0);
     }
 
     .btn-primary {
-      background-color: var(--primary);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
+      box-shadow: 0 4px 14px 0 rgba(11, 61, 145, 0.3);
     }
 
     .btn-primary:hover {
-      background-color: #082E6F;
-      box-shadow: var(--shadow-lg);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      box-shadow: 0 6px 20px 0 rgba(11, 61, 145, 0.4);
+      transform: translateY(-2px);
     }
 
     .btn-secondary {
-      background-color: var(--accent);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
       color: white;
+      box-shadow: 0 4px 14px 0 rgba(201, 154, 107, 0.3);
     }
 
     .btn-secondary:hover {
-      background-color: #B8885A;
-      box-shadow: var(--shadow-lg);
+      background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+      box-shadow: 0 6px 20px 0 rgba(201, 154, 107, 0.4);
+      transform: translateY(-2px);
     }
 
     .btn-outline {
@@ -164,6 +248,7 @@
     .btn-outline:hover {
       background-color: var(--primary);
       color: white;
+      transform: translateY(-2px);
     }
 
     .btn-small {
@@ -191,11 +276,12 @@
       padding: var(--spacing-xl);
       box-shadow: var(--shadow-md);
       transition: all 0.3s ease;
+      border: 1px solid var(--border);
     }
 
     .card:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-4px);
     }
 
     .container {
@@ -204,8 +290,14 @@
       padding: 0 var(--spacing-lg);
     }
 
+    .container-sm {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-lg);
+    }
+
     /* ============================================
-       رأس الصفحة والملاحة
+       رأس الصفحة والملاحة - تحسينات شاملة
        ============================================ */
 
     header {
@@ -214,14 +306,16 @@
       box-shadow: var(--shadow-sm);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.95);
     }
 
     .header-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: var(--spacing-lg) 0;
+      padding: var(--spacing-md) 0;
     }
 
     .logo {
@@ -231,18 +325,32 @@
       display: flex;
       align-items: center;
       gap: var(--spacing-sm);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      color: var(--primary-dark);
+      transform: scale(1.05);
     }
 
     .logo-icon {
-      width: 32px;
-      height: 32px;
-      background-color: var(--accent);
-      border-radius: var(--radius-md);
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: var(--radius-lg);
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       font-weight: 700;
+      font-size: 1.3rem;
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover .logo-icon {
+      transform: rotate(10deg) scale(1.1);
     }
 
     nav {
@@ -251,137 +359,429 @@
       align-items: center;
     }
 
-    /* العنصر الذي يحتوي عناصر التنقل الفعلية (يمكن إخفاؤه على شاشات صغيرة) */
     .main-nav {
       display: flex;
       gap: var(--spacing-xl);
       align-items: center;
     }
 
-    .main-nav a,
-    .main-nav button {
-      color: #374151;
+    .main-nav a {
+      color: var(--text-secondary);
       font-weight: 500;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
       background: transparent;
       border: none;
-      padding: 0;
+      padding: var(--spacing-sm) var(--spacing-md);
       cursor: pointer;
       font-family: inherit;
       font-size: inherit;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      position: relative;
     }
 
-    .main-nav a:hover,
-    .main-nav button:hover {
+    .main-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: all 0.3s ease;
+      transform: translateX(50%);
+    }
+
+    .main-nav a:hover {
       color: var(--primary);
+      background-color: var(--background);
+      transform: translateY(-2px);
+    }
+
+    .main-nav a:hover::after {
+      width: 80%;
     }
 
     .main-nav a.active {
       color: var(--primary);
+      background-color: var(--background);
       border-bottom: 2px solid var(--accent);
-      padding-bottom: var(--spacing-sm);
     }
 
-    /* زر الهامبرغر (مختفي على شاشات كبيرة) */
+    .main-nav a.active::after {
+      width: 80%;
+    }
+
     .mobile-nav-toggle {
       display: none;
       background: transparent;
       border: none;
       font-size: 1.5rem;
-      padding: 0.25rem 0.5rem;
+      padding: 0.5rem;
       cursor: pointer;
+      color: var(--primary);
+      transition: all 0.3s ease;
+    }
+
+    .mobile-nav-toggle:hover {
+      color: var(--primary-dark);
+      transform: scale(1.1);
     }
 
     .lang-toggle {
-      background-color: var(--background);
+      background: linear-gradient(135deg, var(--background) 0%, var(--border) 100%);
       border: 1px solid var(--border);
       padding: var(--spacing-sm) var(--spacing-md);
       border-radius: var(--radius-md);
       cursor: pointer;
       font-weight: 500;
       color: var(--primary);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
     }
 
-    /* تحكم عرض القائمة على الشاشات الصغيرة */
-    @media (max-width: 768px) {
-      .mobile-nav-toggle { display: block; }
-      .main-nav { display: none; }
-      .main-nav.open {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-md);
-        margin-top: var(--spacing-md);
-      }
-      nav { width: 100%; }
+    .lang-toggle:hover {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
     /* ============================================
-       الصفحة الرئيسية
+       القائمة المتنقلة للجوال
+       ============================================ */
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: 100vh;
+      background: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu-header {
+      padding: var(--spacing-lg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+    }
+
+    .mobile-menu-close {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-close:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: rotate(90deg);
+    }
+
+    .mobile-menu-content {
+      padding: var(--spacing-lg);
+    }
+
+    .mobile-menu-content a,
+    .mobile-menu-content button {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      width: 100%;
+      padding: var(--spacing-md);
+      text-align: right;
+      color: var(--text-secondary);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-sm);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .mobile-menu-content a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+      transform: translateY(-50%);
+    }
+
+    .mobile-menu-content a:hover {
+      background: linear-gradient(135deg, var(--background) 0%, var(--border) 100%);
+      color: var(--primary);
+      transform: translateX(-4px);
+    }
+
+    .mobile-menu-content a:hover::after {
+      width: 3px;
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1500;
+      display: none;
+      backdrop-filter: blur(4px);
+    }
+
+    .mobile-menu-overlay.active {
+      display: block;
+    }
+
+    /* ============================================
+       الصفحة الرئيسية - تصميم احترافي
        ============================================ */
 
     .hero {
-      background: linear-gradient(135deg, var(--primary) 0%, #0A2F6F 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 50%, var(--accent) 100%);
       color: white;
-      padding: var(--spacing-2xl) 0;
+      padding: var(--spacing-3xl) 0;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,128C672,107,768,85,864,90.7C960,96,1056,128,1152,133.3C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+      background-size: cover;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(-30px, -30px) rotate(120deg); }
+      66% { transform: translate(30px, -30px) rotate(240deg); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .hero h1 {
       color: white;
-      font-size: var(--font-size-4xl);
+      font-size: var(--font-size-5xl);
       margin-bottom: var(--spacing-lg);
+      animation: fadeInUp 0.8s ease;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    .hero p {
-      color: rgba(255, 255, 255, 0.9);
-      font-size: var(--font-size-lg);
+    .hero .subtitle {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: var(--font-size-xl);
       margin-bottom: var(--spacing-2xl);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      animation: fadeInUp 0.8s ease 0.2s both;
+      line-height: 1.8;
     }
 
-    .services-grid {
+    .hero-buttons {
+      display: flex;
+      gap: var(--spacing-lg);
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ============================================
+       قسم الميزات
+       ============================================ */
+
+    .features-section {
+      padding: var(--spacing-3xl) 0;
+      background: var(--surface);
+    }
+
+    .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--spacing-xl);
-      margin: var(--spacing-2xl) 0;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--spacing-2xl);
+      margin-top: var(--spacing-3xl);
     }
 
-    .service-card {
-      background-color: var(--surface);
-      border-radius: var(--radius-xl);
-      padding: var(--spacing-xl);
+    .feature-card {
+      background: var(--surface);
+      border-radius: var(--radius-2xl);
+      padding: var(--spacing-2xl);
       text-align: center;
       box-shadow: var(--shadow-md);
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
     }
 
-    .service-card:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-4px);
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
     }
 
-    .service-icon {
-      width: 60px;
-      height: 60px;
-      background-color: var(--background);
-      border-radius: var(--radius-lg);
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-8px);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto var(--spacing-lg);
-      font-size: 1.5rem;
+      font-size: 2rem;
+      color: white;
+      box-shadow: 0 8px 20px rgba(11, 61, 145, 0.3);
+      transition: all 0.3s ease;
     }
 
-    .service-card h3 {
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .feature-card h3 {
       color: var(--primary);
       margin-bottom: var(--spacing-md);
+      font-size: var(--font-size-xl);
     }
 
-    .service-card p {
-      color: var(--muted);
-      font-size: var(--font-size-sm);
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: var(--font-size-base);
+      margin-bottom: var(--spacing-lg);
+      line-height: 1.8;
+    }
+
+    /* ============================================
+       قسم الإحصائيات
+       ============================================ */
+
+    .stats-section {
+      padding: var(--spacing-3xl) 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-xl);
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: var(--spacing-lg);
+    }
+
+    .stat-number {
+      font-size: var(--font-size-4xl);
+      font-weight: 700;
+      margin-bottom: var(--spacing-sm);
+      background: linear-gradient(135deg, var(--accent) 0%, white 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: var(--font-size-lg);
+      opacity: 0.9;
+    }
+
+    /* ============================================
+       قسم CTA
+       ============================================ */
+
+    .cta-section {
+      padding: var(--spacing-3xl) 0;
+      background: var(--background);
+      text-align: center;
+    }
+
+    .cta-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      color: var(--primary);
       margin-bottom: var(--spacing-lg);
     }
 
@@ -397,7 +797,7 @@
       display: block;
       margin-bottom: var(--spacing-sm);
       font-weight: 500;
-      color: #1F2937;
+      color: var(--text-primary);
     }
 
     input[type="text"],
@@ -410,11 +810,12 @@
     select {
       width: 100%;
       padding: var(--spacing-md);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
       font-family: var(--font-family);
       font-size: var(--font-size-base);
       transition: all 0.3s ease;
+      background-color: var(--surface);
     }
 
     input[type="text"]:focus,
@@ -428,11 +829,12 @@
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(11, 61, 145, 0.1);
+      background-color: white;
     }
 
     textarea {
       resize: vertical;
-      min-height: 100px;
+      min-height: 120px;
     }
 
     .form-hint {
@@ -495,30 +897,61 @@
       padding: var(--spacing-lg);
       border-radius: var(--radius-lg);
       margin-bottom: var(--spacing-lg);
+      position: relative;
+      animation: slideIn 0.3s ease;
+      border-right: 4px solid;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
 
     .alert-success {
       background-color: #D1FAE5;
       color: #065F46;
-      border-left: 4px solid var(--success);
+      border-right-color: var(--success);
     }
 
     .alert-error {
       background-color: #FEE2E2;
       color: #7F1D1D;
-      border-left: 4px solid var(--error);
+      border-right-color: var(--error);
     }
 
     .alert-warning {
       background-color: #FEF3C7;
       color: #78350F;
-      border-left: 4px solid #F59E0B;
+      border-right-color: var(--warning);
     }
 
     .alert-info {
       background-color: #DBEAFE;
       color: #0C2340;
-      border-left: 4px solid var(--primary);
+      border-right-color: var(--primary);
+    }
+
+    .alert-close {
+      position: absolute;
+      top: var(--spacing-md);
+      left: var(--spacing-md);
+      background: transparent;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: inherit;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .alert-close:hover {
+      opacity: 1;
     }
 
     /* ============================================
@@ -526,7 +959,7 @@
        ============================================ */
 
     .page {
-      min-height: 100vh;
+      min-height: calc(100vh - 200px);
       padding: var(--spacing-2xl) 0;
     }
 
@@ -541,11 +974,14 @@
 
     .section-title h2 {
       margin-bottom: var(--spacing-md);
+      font-size: var(--font-size-3xl);
     }
 
     .section-title p {
-      color: var(--muted);
+      color: var(--text-secondary);
       font-size: var(--font-size-lg);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     /* ============================================
@@ -553,35 +989,54 @@
        ============================================ */
 
     footer {
-      background-color: var(--primary);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
-      padding: var(--spacing-2xl) 0;
-      margin-top: var(--spacing-2xl);
+      padding: var(--spacing-3xl) 0 var(--spacing-xl);
+      margin-top: var(--spacing-3xl);
     }
 
     footer a {
       color: var(--accent);
+      text-decoration: none;
+      position: relative;
+      transition: all 0.3s ease;
     }
 
     footer a:hover {
-      text-decoration: underline;
+      color: white;
+    }
+
+    footer a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    footer a:hover::after {
+      width: 100%;
     }
 
     .footer-content {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--spacing-xl);
-      margin-bottom: var(--spacing-xl);
+      gap: var(--spacing-2xl);
+      margin-bottom: var(--spacing-2xl);
     }
 
     .footer-section h4 {
       color: white;
-      margin-bottom: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      font-size: var(--font-size-xl);
     }
 
-    /* اجعل وصف الفوتر يتناسق مع ألوان الموقع */
     .footer-section p {
-      color: var(--accent);
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.8;
     }
 
     .footer-section ul {
@@ -592,154 +1047,433 @@
       margin-bottom: var(--spacing-sm);
     }
 
+    .footer-section li a {
+      color: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-section li a:hover {
+      color: var(--accent);
+      transform: translateX(-4px);
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: var(--accent);
+      transform: translateY(-4px);
+    }
+
     .footer-bottom {
       border-top: 1px solid rgba(255, 255, 255, 0.2);
-      padding-top: var(--spacing-lg);
+      padding-top: var(--spacing-xl);
       text-align: center;
-      color: #FFFFFF; /* تم تغيير اللون إلى الأبيض */
+      color: rgba(255, 255, 255, 0.8);
     }
 
     /* ============================================
-       صفحة المُنشئ (Builder)
+       صفحة المُنشئ (Builder) - محسّنة
        ============================================ */
 
     .builder-layout {
       display: grid;
-      grid-template-columns: 300px 1fr 1fr;
-      gap: var(--spacing-lg);
-      min-height: 100vh;
+      grid-template-columns: 300px 1fr;
+      gap: var(--spacing-xl);
+      min-height: calc(100vh - 200px);
     }
 
     .builder-sidebar {
-      background-color: var(--surface);
-      border-right: 1px solid var(--border);
-      padding: var(--spacing-lg);
-      overflow-y: auto;
+      background: var(--surface);
+      border-radius: var(--radius-2xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-lg);
+      height: fit-content;
       position: sticky;
-      top: 80px;
-      height: calc(100vh - 80px);
+      top: 100px;
+      border: 1px solid var(--border);
     }
 
     .builder-form {
-      padding: var(--spacing-lg);
-      overflow-y: auto;
+      background: var(--surface);
+      border-radius: var(--radius-2xl);
+      padding: var(--spacing-2xl);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
     }
 
     .builder-preview {
-      background-color: var(--background);
-      padding: var(--spacing-lg);
-      overflow-y: auto;
-      position: sticky;
-      top: 80px;
-      height: calc(100vh - 80px);
+      background: var(--surface);
+      border-radius: var(--radius-2xl);
+      padding: var(--spacing-2xl);
+      box-shadow: var(--shadow-lg);
+      margin-top: var(--spacing-xl);
+      border: 1px solid var(--border);
     }
 
     .nav-item {
       padding: var(--spacing-md);
       margin-bottom: var(--spacing-sm);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       cursor: pointer;
       transition: all 0.3s ease;
-      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
     }
 
     .nav-item:hover {
-      background-color: var(--background);
+      background: linear-gradient(135deg, var(--background) 0%, var(--border) 100%);
     }
 
     .nav-item.active {
-      background-color: var(--background);
+      background: linear-gradient(135deg, var(--background) 0%, var(--border) 100%);
       color: var(--primary);
-      border-left-color: var(--accent);
+      border-right-color: var(--accent);
       font-weight: 600;
     }
 
     .ats-selector {
-      background-color: var(--background);
+      background: linear-gradient(135deg, var(--background) 0%, var(--border) 100%);
       padding: var(--spacing-lg);
       border-radius: var(--radius-lg);
       margin-bottom: var(--spacing-lg);
     }
 
     .ats-warning {
-      background-color: #FEF3C7;
-      border-left: 4px solid #F59E0B;
+      background: #FEF3C7;
+      border-right: 4px solid var(--warning);
       padding: var(--spacing-md);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       margin-bottom: var(--spacing-lg);
       font-size: var(--font-size-sm);
     }
 
-    .resume-template {
-      background-color: var(--surface);
-      padding: var(--spacing-2xl);
+    /* ============================================
+       تصميم السيرة الذاتية - محسّن للـ ATS
+       ============================================ */
+
+    .resume-container {
+      background: white;
+      padding: var(--spacing-3xl);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       line-height: 1.8;
+      border: 1px solid var(--border);
+      max-width: 210mm;
+      margin: 0 auto;
+      position: relative;
     }
 
+    /* تنسيق عام لكل الأنظمة */
     .resume-header {
       text-align: center;
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: var(--spacing-lg);
-      margin-bottom: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+      page-break-inside: avoid;
     }
 
     .resume-name {
-      font-size: var(--font-size-2xl);
+      font-size: 2rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--text-primary);
+      margin-bottom: var(--spacing-md);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .resume-contact {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-md);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-xs) var(--spacing-md);
+      background: var(--background);
+      border-radius: var(--radius-md);
       font-size: var(--font-size-sm);
-      color: var(--muted);
-      margin-top: var(--spacing-sm);
+      color: var(--text-secondary);
+      white-space: nowrap;
     }
 
     .resume-section {
-      margin-bottom: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+      page-break-inside: avoid;
     }
 
     .resume-section-title {
-      font-size: var(--font-size-lg);
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--primary);
-      border-bottom: 1px solid var(--border);
+      margin-bottom: var(--spacing-lg);
       padding-bottom: var(--spacing-sm);
-      margin-bottom: var(--spacing-md);
+      border-bottom: 2px solid var(--border);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .resume-entry {
       margin-bottom: var(--spacing-lg);
+      page-break-inside: avoid;
+    }
+
+    .resume-entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .resume-entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--spacing-sm);
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
     }
 
     .resume-entry-title {
       font-weight: 600;
-      color: #1F2937;
+      color: var(--text-primary);
+      font-size: 1.1rem;
     }
 
     .resume-entry-subtitle {
-      color: var(--muted);
+      color: var(--text-secondary);
       font-size: var(--font-size-sm);
+      font-weight: 500;
+    }
+
+    .resume-entry-date {
+      color: var(--primary);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      white-space: nowrap;
     }
 
     .resume-entry-description {
-      color: #374151;
+      color: var(--text-secondary);
       margin-top: var(--spacing-sm);
       font-size: var(--font-size-sm);
+      line-height: 1.7;
+      text-align: justify;
     }
 
-    .resume-text-view {
-      background-color: #F3F4F6;
-      padding: var(--spacing-lg);
+    .resume-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-md);
+    }
+
+    .skill-tag {
+      background: linear-gradient(135deg, var(--background) 0%, var(--border) 100%);
+      color: var(--text-primary);
+      padding: var(--spacing-xs) var(--spacing-md);
+      border-radius: var(--radius-lg);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    /* تنسيق خاص لنظام Workday */
+    .resume-workday {
+      font-family: Arial, sans-serif;
+    }
+
+    .resume-workday .resume-header {
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: var(--spacing-xl);
+    }
+
+    .resume-workday .resume-name {
+      color: var(--primary);
+    }
+
+    .resume-workday .resume-section-title {
+      background-color: var(--primary);
+      color: white;
+      padding: var(--spacing-sm) var(--spacing-md);
       border-radius: var(--radius-md);
+      border: none;
+    }
+
+    .resume-workday .contact-item {
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    /* تنسيق خاص لنظام Oracle/Taleo */
+    .resume-oracle {
+      font-family: Times New Roman, serif;
+    }
+
+    .resume-oracle .resume-header {
+      text-align: right;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .resume-oracle .resume-name {
+      color: var(--primary);
+      font-size: 1.8rem;
+    }
+
+    .resume-oracle .resume-section-title {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .resume-oracle .resume-entry-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: var(--spacing-xs);
+    }
+
+    /* تنسيق خاص لنظام Greenhouse */
+    .resume-greenhouse {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .resume-greenhouse .resume-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      padding: var(--spacing-xl);
+      border-radius: var(--radius-lg);
+    }
+
+    .resume-greenhouse .resume-name {
+      color: white;
+    }
+
+    .resume-greenhouse .contact-item {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .resume-greenhouse .resume-section-title {
+      color: var(--primary);
+      border-left: 4px solid var(--accent);
+      padding-right: var(--spacing-md);
+      border-bottom: none;
+    }
+
+    /* تنسيق خاص لنظام iCIMS */
+    .resume-icims {
+      font-family: Calibri, Arial, sans-serif;
+    }
+
+    .resume-icims .resume-header {
+      border: 2px solid var(--primary);
+      padding: var(--spacing-lg);
+    }
+
+    .resume-icims .resume-name {
+      color: var(--primary);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: var(--spacing-sm);
+    }
+
+    .resume-icims .resume-section-title {
+      background-color: var(--background);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    /* تنسيق خاص لنظام Lever */
+    .resume-lever {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .resume-lever .resume-header {
+      text-align: left;
+      border-left: 5px solid var(--accent);
+      padding-left: var(--spacing-xl);
+    }
+
+    .resume-lever .resume-name {
+      color: var(--accent);
+    }
+
+    .resume-lever .resume-section-title {
+      color: var(--accent);
+      border-bottom: 3px solid var(--accent);
+    }
+
+    /* تنسيق خاص لنظام SmartRecruiters */
+    .resume-smartrecruiters {
+      font-family: Arial, sans-serif;
+    }
+
+    .resume-smartrecruiters .resume-header {
+      background-color: var(--background);
+      padding: var(--spacing-xl);
+      border-radius: var(--radius-lg);
+    }
+
+    .resume-smartrecruiters .resume-name {
+      color: var(--primary);
+    }
+
+    .resume-smartrecruiters .resume-section-title {
+      background-color: var(--primary);
+      color: white;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--radius-md);
+    }
+
+    /* تنسيق خاص لنظام BambooHR */
+    .resume-bamboohr {
+      font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    }
+
+    .resume-bamboohr .resume-header {
+      border-top: 4px solid var(--accent);
+      padding-top: var(--spacing-xl);
+    }
+
+    .resume-bamboohr .resume-name {
+      color: var(--accent);
+    }
+
+    .resume-bamboohr .resume-section-title {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    /* تنسيق نصي للـ ATS */
+    .resume-text-view {
+      background: #F3F4F6;
+      padding: var(--spacing-xl);
+      border-radius: var(--radius-lg);
       font-family: 'Courier New', monospace;
       font-size: var(--font-size-sm);
       white-space: pre-wrap;
       word-wrap: break-word;
-      color: #1F2937;
+      color: var(--text-primary);
+      line-height: 1.8;
     }
 
     /* ============================================
@@ -748,60 +1482,78 @@
 
     .template-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: var(--spacing-xl);
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--spacing-2xl);
       margin: var(--spacing-2xl) 0;
     }
 
     .template-card {
-      background-color: var(--surface);
-      border-radius: var(--radius-xl);
+      background: var(--surface);
+      border-radius: var(--radius-2xl);
       overflow: hidden;
       box-shadow: var(--shadow-md);
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
       cursor: pointer;
+      border: 1px solid var(--border);
     }
 
     .template-card:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-8px);
     }
 
     .template-preview {
       width: 100%;
-      height: 200px;
+      height: 220px;
       background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       font-weight: 600;
+      font-size: 1.3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .template-preview::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: float 15s ease-in-out infinite;
     }
 
     .template-info {
-      padding: var(--spacing-lg);
+      padding: var(--spacing-xl);
     }
 
     .template-info h3 {
       margin-bottom: var(--spacing-sm);
+      color: var(--primary);
     }
 
     .template-badge {
       display: inline-block;
       padding: var(--spacing-xs) var(--spacing-sm);
-      border-radius: var(--radius-sm);
-      font-size: var(--font-size-sm);
-      font-weight: 500;
+      border-radius: var(--radius-lg);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
       margin-bottom: var(--spacing-md);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .template-badge.ats-friendly {
-      background-color: #D1FAE5;
+      background: #D1FAE5;
       color: #065F46;
     }
 
     .template-badge.not-ats-friendly {
-      background-color: #FEE2E2;
+      background: #FEE2E2;
       color: #7F1D1D;
     }
 
@@ -810,63 +1562,82 @@
        ============================================ */
 
     .auth-container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: var(--spacing-2xl) auto;
-      padding: var(--spacing-2xl);
+      padding: var(--spacing-lg);
     }
 
     .auth-wrapper {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-2xl);
-      background-color: var(--surface);
-      border-radius: var(--radius-xl);
+      gap: 0;
+      background: var(--surface);
+      border-radius: var(--radius-2xl);
       overflow: hidden;
-      box-shadow: var(--shadow-lg);
+      box-shadow: var(--shadow-xl);
     }
 
     .auth-info {
-      background: linear-gradient(135deg, var(--primary) 0%, #0A2F6F 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
-      padding: var(--spacing-2xl);
+      padding: var(--spacing-3xl);
       display: flex;
       flex-direction: column;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-info::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+      animation: float 20s ease-in-out infinite;
     }
 
     .auth-info h2 {
       color: white;
       font-size: var(--font-size-3xl);
       margin-bottom: var(--spacing-lg);
+      position: relative;
+      z-index: 1;
     }
 
     .auth-info p {
       color: rgba(255, 255, 255, 0.9);
       margin-bottom: var(--spacing-xl);
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
     }
 
     .auth-form {
-      padding: var(--spacing-2xl);
+      padding: var(--spacing-3xl);
     }
 
     .auth-tabs {
       display: flex;
-      margin-bottom: var(--spacing-xl);
-      border-bottom: 1px solid var(--border);
+      margin-bottom: var(--spacing-2xl);
+      border-bottom: 2px solid var(--border);
     }
 
     .auth-tab {
       padding: var(--spacing-md) var(--spacing-lg);
       font-weight: 600;
-      color: var(--muted);
+      color: var(--text-secondary);
       cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.3s ease;
     }
 
     .auth-tab.active {
       color: var(--primary);
-      border-bottom-color: var(--primary);
+      border-bottom-color: var(--accent);
     }
 
     .auth-card {
@@ -875,13 +1646,14 @@
 
     .auth-card h2 {
       text-align: center;
-      margin-bottom: var(--spacing-xl);
+      margin-bottom: var(--spacing-2xl);
+      color: var(--primary);
     }
 
     .auth-divider {
       text-align: center;
       margin: var(--spacing-xl) 0;
-      color: var(--muted);
+      color: var(--text-secondary);
       position: relative;
     }
 
@@ -910,18 +1682,23 @@
 
     .social-btn {
       padding: var(--spacing-md);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      background-color: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
       cursor: pointer;
       transition: all 0.3s ease;
       text-align: center;
       font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-sm);
     }
 
     .social-btn:hover {
-      background-color: var(--background);
+      background: var(--background);
       border-color: var(--primary);
+      transform: translateY(-2px);
     }
 
     .auth-link {
@@ -933,11 +1710,28 @@
     .auth-link a {
       color: var(--primary);
       font-weight: 600;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .auth-link a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .auth-link a:hover::after {
+      width: 100%;
     }
 
     .auth-terms {
       font-size: var(--font-size-sm);
-      color: var(--muted);
+      color: var(--text-secondary);
       text-align: center;
       margin-top: var(--spacing-md);
     }
@@ -948,26 +1742,114 @@
     }
 
     /* ============================================
+       صفحة تواصل معنا
+       ============================================ */
+
+    .contact-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: var(--spacing-lg);
+    }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-2xl);
+      background: var(--surface);
+      border-radius: var(--radius-2xl);
+      padding: var(--spacing-3xl);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-info h2 {
+      color: var(--primary);
+      margin-bottom: var(--spacing-lg);
+      font-size: var(--font-size-3xl);
+    }
+
+    .contact-info p {
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-xl);
+      line-height: 1.8;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 15px rgba(11, 61, 145, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .contact-item:hover .contact-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .contact-details h4 {
+      color: var(--primary);
+      margin-bottom: var(--spacing-xs);
+      font-size: var(--font-size-lg);
+    }
+
+    .contact-details p {
+      color: var(--text-secondary);
+      margin: 0;
+      font-size: var(--font-size-base);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-form h3 {
+      color: var(--primary);
+      margin-bottom: var(--spacing-xl);
+      font-size: var(--font-size-2xl);
+    }
+
+    /* ============================================
        لوحة التحكم (Dashboard)
        ============================================ */
 
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--spacing-xl);
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: var(--spacing-2xl);
       margin: var(--spacing-2xl) 0;
     }
 
     .resume-item {
-      background-color: var(--surface);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-lg);
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-xl);
       box-shadow: var(--shadow-md);
       transition: all 0.3s ease;
+      border: 1px solid var(--border);
     }
 
     .resume-item:hover {
-      box-shadow: var(--shadow-lg);
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-4px);
     }
 
     .resume-item-header {
@@ -980,11 +1862,12 @@
     .resume-item-title {
       font-weight: 600;
       color: var(--primary);
+      font-size: var(--font-size-lg);
     }
 
     .resume-item-date {
       font-size: var(--font-size-sm);
-      color: var(--muted);
+      color: var(--text-secondary);
     }
 
     .resume-item-actions {
@@ -1000,6 +1883,37 @@
     }
 
     /* ============================================
+       مؤشر التحميل
+       ============================================ */
+
+    .loading-indicator {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      display: none;
+    }
+
+    .loading-indicator.active {
+      display: block;
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--border);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ============================================
        الاستجابة والشاشات الصغيرة
        ============================================ */
 
@@ -1012,66 +1926,86 @@
         position: relative;
         top: 0;
         height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-      
-      .builder-preview {
-        position: relative;
-        top: 0;
-        height: auto;
       }
 
       .auth-wrapper {
         grid-template-columns: 1fr;
       }
+
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: var(--font-size-4xl);
+      }
     }
 
     @media (max-width: 768px) {
       .header-content {
-        flex-direction: column;
-        gap: var(--spacing-lg);
+        padding: var(--spacing-md) 0;
       }
-      
-      nav {
-        flex-direction: column;
-        width: 100%;
-        gap: var(--spacing-md);
+
+      .main-nav {
+        display: none;
       }
-      
-      nav a {
+
+      .mobile-nav-toggle {
         display: block;
-        padding: var(--spacing-md);
-        background-color: var(--background);
-        border-radius: var(--radius-md);
       }
-      
+
+      .hero {
+        padding: var(--spacing-2xl) 0;
+      }
+
       .hero h1 {
         font-size: var(--font-size-3xl);
       }
-      
-      .services-grid {
+
+      .hero .subtitle {
+        font-size: var(--font-size-lg);
+      }
+
+      .features-grid {
         grid-template-columns: 1fr;
       }
-      
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .grid-2 {
         grid-template-columns: 1fr;
       }
-      
+
       .grid-3 {
         grid-template-columns: 1fr;
       }
-      
+
       .template-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: 1fr;
       }
-      
+
       .social-login {
         grid-template-columns: 1fr;
       }
-      
+
       .footer-content {
         grid-template-columns: 1fr;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .section-title h2 {
+        font-size: var(--font-size-2xl);
       }
     }
 
@@ -1079,23 +2013,23 @@
       .container {
         padding: 0 var(--spacing-md);
       }
-      
+
       h1 { font-size: var(--font-size-2xl); }
       h2 { font-size: var(--font-size-xl); }
       h3 { font-size: var(--font-size-lg); }
-      
+
       .btn {
         width: 100%;
       }
-      
+
       .card {
         padding: var(--spacing-lg);
       }
-      
+
       .hero {
         padding: var(--spacing-xl) 0;
       }
-      
+
       .section {
         padding: var(--spacing-xl) 0;
       }
@@ -1103,61 +2037,222 @@
       .auth-form {
         padding: var(--spacing-lg);
       }
+
+      .contact-wrapper {
+        padding: var(--spacing-lg);
+      }
+
+      .mobile-menu {
+        width: 90%;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .resume-container {
+        padding: var(--spacing-lg);
+      }
     }
 
     /* ============================================
-       الطباعة
+       الطباعة والتصدير - محسّن
        ============================================ */
 
     @media print {
       body {
         background-color: white;
+        font-size: 12pt;
       }
-      
-      header, footer, nav, .btn, .alert {
-        display: none;
-      }
-      
-      .resume-template {
-        box-shadow: none;
-        padding: 0;
-      }
-      /* عناصر توضع عليها هذه الفئة لتُخفي عند الطباعة */
-      .no-print {
+
+      header, footer, nav, .btn, .alert, .no-print {
         display: none !important;
       }
+
+      .resume-container {
+        box-shadow: none;
+        padding: 20mm;
+        border: none;
+        margin: 0;
+        max-width: 100%;
+      }
+
+      .resume-contact {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5mm;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 2mm;
+        background: transparent !important;
+        border: 1px solid #ddd !important;
+        padding: 2mm 4mm !important;
+        border-radius: 2mm !important;
+        font-size: 10pt !important;
+        white-space: nowrap !important;
+      }
+
+      .resume-section {
+        margin-bottom: 10mm;
+        page-break-inside: avoid;
+      }
+
+      .resume-entry {
+        margin-bottom: 8mm;
+        page-break-inside: avoid;
+      }
+
+      .resume-entry-header {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 2mm;
+      }
+
+      .resume-entry-date {
+        white-space: nowrap;
+        font-size: 10pt;
+      }
+
+      .skill-tag {
+        background: #f5f5f5 !important;
+        border: 1px solid #ddd !important;
+        padding: 2mm 4mm !important;
+        border-radius: 2mm !important;
+        font-size: 10pt !important;
+      }
+
+      /* تحسينات خاصة للطباعة */
+      .resume-workday,
+      .resume-oracle,
+      .resume-greenhouse,
+      .resume-icims,
+      .resume-lever,
+      .resume-smartrecruiters,
+      .resume-bamboohr {
+        font-family: Arial, sans-serif !important;
+        font-size: 11pt !important;
+      }
+
+      .resume-workday .resume-section-title,
+      .resume-smartrecruiters .resume-section-title {
+        background: white !important;
+        color: black !important;
+        border: 1px solid black !important;
+        padding: 2mm !important;
+      }
+
+      .resume-greenhouse .resume-header {
+        background: white !important;
+        color: black !important;
+        border: 1px solid black !important;
+      }
+
+      .resume-greenhouse .contact-item {
+        background: white !important;
+        color: black !important;
+        border: 1px solid black !important;
+      }
     }
 
-    /* إزالة رؤوس/تذييلات المتصفح عند التصدير عن طريق ضبط الهوامش (قد يحتاج المستخدم لإيقاف "Headers and footers" في مربع الطباعة) */
     @page {
       size: A4;
-      margin: 10mm;
+      margin: 15mm;
     }
 
-    /* تحسينات إضافية */
+    /* ============================================
+       تحسينات إضافية
+       ============================================ */
+
     #app {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
-    
+
     #app-content {
       flex: 1;
     }
-    
-    /* تحسينات الطباعة */
-    @media print {
-      header, footer, .builder-sidebar, .builder-form, .lang-toggle {
-        display: none !important;
-      }
-      
+
+    /* تحسينات للوصولية */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* تحسينات للتركيز */
+    *:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    button:focus,
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* تحسينات للتصدير */
+    .pdf-export .resume-contact {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 5mm !important;
+    }
+
+    .pdf-export .contact-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 2mm !important;
+      background: transparent !important;
+      border: 1px solid #ddd !important;
+      padding: 2mm 4mm !important;
+      border-radius: 2mm !important;
+      font-size: 10pt !important;
+      white-space: nowrap !important;
+    }
+
+    /* تحريك العناصر */
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* تحسينات للجوال */
+    @media (max-width: 768px) {
       .builder-layout {
         grid-template-columns: 1fr !important;
       }
-      
-      .resume-template {
-        max-width: 100%;
-        box-shadow: none;
+
+      .builder-content {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .builder-preview {
+        order: -1;
+      }
+
+      .mobile-menu {
+        width: 85%;
+        max-width: 300px;
       }
     }
   </style>
@@ -1166,11 +2261,32 @@
   <div id="app">
     <!-- سيتم ملؤه بواسطة JavaScript -->
   </div>
-  
-  <!-- مكتبات خارجية (اختيارية) -->
-  <!-- يمكن إضافة jsPDF هنا للتصدير المتقدم -->
+
+  <!-- القائمة المتنقلة للجوال -->
+  <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-header">
+      <div class="logo">
+        <div class="logo-icon">CV</div>
+        <span>CV Studio</span>
+      </div>
+      <button class="mobile-menu-close" onclick="closeMobileMenu()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-menu-content">
+      <!-- سيتم ملؤه ديناميكياً -->
+    </div>
+  </div>
+
+  <!-- مؤشر التحميل -->
+  <div class="loading-indicator" id="loading-indicator">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- مكتبات خارجية -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  
+
   <!-- التطبيق الرئيسي -->
   <script>
     /* ============================================
@@ -1184,7 +2300,7 @@
       currentLanguage: 'ar',
       selectedATS: 'generic',
       currentTemplate: 'modern',
-      authMode: 'login', // إضافة وضع المصادقة (login/signup)
+      authMode: 'login',
       resumeData: {
         personalInfo: {
           fullName: '',
@@ -1225,6 +2341,7 @@
         atsPreview: 'معاينة ATS',
         quickTemplates: 'قوالب سريعة',
         support: 'الدعم',
+        contact: 'تواصل معنا',
         personalInfo: 'المعلومات الشخصية',
         experience: 'الخبرة العملية',
         education: 'التعليم',
@@ -1300,7 +2417,6 @@
         newResume: 'سيرة جديدة',
         lastModified: 'آخر تعديل',
         actions: 'الجراءات',
-        // ترجمات الفوتر
         footerDescription: 'منصة احترافية لإنشاء السير الذاتية المتوافقة مع أنظمة التوظيف',
         footerLinks: 'الروابط',
         footerContact: 'التواصل',
@@ -1308,7 +2424,6 @@
         footerTwitter: 'تويتر',
         footerLinkedIn: 'لينكدإن',
         footerCopyright: 'جميع الحقوق محفوظة',
-        // ترجمات جديدة للصفحة المحسّنة
         welcomeBack: 'مرحباً بعودتك',
         createAccount: 'إنشاء حساب جديد',
         loginDesc: 'سجل دخولك للوصول إلى حسابك',
@@ -1316,7 +2431,40 @@
         termsAgree: 'بإنشاء حسابك، أنت توافق على',
         termsOfService: 'شروط الخدمة',
         and: 'و',
-        privacyPolicy: 'سياسة الخصوصية'
+        privacyPolicy: 'سياسة الخصوصية',
+        contactTitle: 'تواصل معنا',
+        contactSubtitle: 'نحن هنا لمساعدتك',
+        contactName: 'الاسم الكامل',
+        contactSubject: 'الموضوع',
+        contactMessage: 'الرسالة',
+        contactSend: 'إرسال الرسالة',
+        contactEmail: 'البريد الإلكتروني',
+        contactPhone: 'رقم الهاتف',
+        contactAddress: 'العنوان',
+        contactHours: 'ساعات العمل',
+        heroTitle: 'احترف سيرتك الذاتية',
+        heroSubtitle: 'أنشئ سيرة ذاتية احترافية ومتوافقة مع أنظمة التوظيف في دقائق',
+        heroFeature1: 'قوالب احترافية',
+        heroFeature2: 'متوافق مع ATS',
+        heroFeature3: 'تصدير سهل',
+        feature1Title: 'قوالب احترافية',
+        feature1Desc: 'اختر من بين مجموعة واسعة من القوالب المصممة بعناية',
+        feature2Title: 'متوافق مع ATS',
+        feature2Desc: 'تأكد من أن سيرتك الذاتية ستمر عبر أنظمة التتبع بنجاح',
+        feature3Title: 'تصدير سهل',
+        feature3Desc: 'صدّر سيرتك الذاتية بصيغة PDF أو DOCX بنقرة واحدة',
+        feature4Title: 'معاينة مباشرة',
+        feature4Desc: 'شاهد كيف سيبدو شكل سيرتك الذاتية أثناء الكتابة',
+        stats1: '50,000+',
+        stats1Label: 'سيرة ذاتية منشأة',
+        stats2: '100+',
+        stats2Label: 'قالب احترافي',
+        stats3: '95%',
+        stats3Label: 'معدل القبول',
+        stats4: '24/7',
+        stats4Label: 'دعم فني',
+        ctaTitle: 'جاهز للبدء؟',
+        ctaSubtitle: 'انضم إلى آلاف المحترفين الذين استفادوا من خدمتنا'
       },
       en: {
         appTitle: 'CV Studio',
@@ -1333,6 +2481,7 @@
         atsPreview: 'ATS Preview',
         quickTemplates: 'Quick Templates',
         support: 'Support',
+        contact: 'Contact Us',
         personalInfo: 'Personal Information',
         experience: 'Work Experience',
         education: 'Education',
@@ -1408,7 +2557,6 @@
         newResume: 'New Resume',
         lastModified: 'Last Modified',
         actions: 'Actions',
-        // ترجمات الفوتر
         footerDescription: 'Professional platform for creating ATS-compatible resumes',
         footerLinks: 'Links',
         footerContact: 'Contact',
@@ -1416,7 +2564,6 @@
         footerTwitter: 'Twitter',
         footerLinkedIn: 'LinkedIn',
         footerCopyright: 'All rights reserved',
-        // ترجمات جديدة للصفحة المحسّنة
         welcomeBack: 'Welcome Back',
         createAccount: 'Create Account',
         loginDesc: 'Sign in to access your account',
@@ -1424,7 +2571,40 @@
         termsAgree: 'By creating an account, you agree to our',
         termsOfService: 'Terms of Service',
         and: 'and',
-        privacyPolicy: 'Privacy Policy'
+        privacyPolicy: 'Privacy Policy',
+        contactTitle: 'Contact Us',
+        contactSubtitle: 'We are here to help you',
+        contactName: 'Full Name',
+        contactSubject: 'Subject',
+        contactMessage: 'Message',
+        contactSend: 'Send Message',
+        contactEmail: 'Email',
+        contactPhone: 'Phone',
+        contactAddress: 'Address',
+        contactHours: 'Working Hours',
+        heroTitle: 'Master Your Resume',
+        heroSubtitle: 'Create a professional, ATS-compatible resume in minutes',
+        heroFeature1: 'Professional Templates',
+        heroFeature2: 'ATS Compatible',
+        heroFeature3: 'Easy Export',
+        feature1Title: 'Professional Templates',
+        feature1Desc: 'Choose from a wide range of carefully designed templates',
+        feature2Title: 'ATS Compatible',
+        feature2Desc: 'Ensure your resume passes through tracking systems successfully',
+        feature3Title: 'Easy Export',
+        feature3Desc: 'Export your resume as PDF or DOCX with one click',
+        feature4Title: 'Live Preview',
+        feature4Desc: 'See how your resume looks as you write',
+        stats1: '50,000+',
+        stats1Label: 'Resumes Created',
+        stats2: '100+',
+        stats2Label: 'Professional Templates',
+        stats3: '95%',
+        stats3Label: 'Acceptance Rate',
+        stats4: '24/7',
+        stats4Label: 'Support',
+        ctaTitle: 'Ready to Start?',
+        ctaSubtitle: 'Join thousands of professionals who have benefited from our service'
       }
     };
 
@@ -1435,12 +2615,30 @@
       return Translations[lang]?.[key] || key;
     }
 
+    function escapeHTML(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
     function setLanguage(lang) {
       AppState.currentLanguage = lang;
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
       localStorage.setItem('cv-studio-lang', lang);
-      updatePageContent();
+      
+      // تحديث الصفحة بالكامل مع اللغة الجديدة
+      renderPage();
+      
+      // إظهار إشعار التغيير
+      showNotification(
+        lang === 'ar' ? 'تم تغيير اللغة إلى العربية' : 'Language changed to English',
+        'success'
+      );
     }
 
     function navigateTo(page) {
@@ -1457,6 +2655,7 @@
     function loadFromLocalStorage() {
       const savedData = localStorage.getItem('cv-studio-data');
       const savedAuth = localStorage.getItem('cv-studio-auth');
+      const savedLang = localStorage.getItem('cv-studio-lang');
       
       if (savedData) {
         AppState.resumeData = JSON.parse(savedData);
@@ -1464,9 +2663,42 @@
       if (savedAuth) {
         AppState.userAuth = JSON.parse(savedAuth);
       }
+      if (savedLang) {
+        AppState.currentLanguage = savedLang;
+        document.documentElement.lang = savedLang;
+        document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+      }
     }
 
-    // ============ وظائف ATS ============
+    // ============ نظام الإشعارات ============
+
+    function showNotification(message, type = 'info', duration = 3000) {
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type}`;
+      notification.innerHTML = `
+        ${message}
+        <button class="alert-close" onclick="this.parentElement.remove()">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove();
+        }
+      }, duration);
+    }
+
+    function showLoadingIndicator(show) {
+      const loader = document.getElementById('loading-indicator');
+      if (loader) {
+        loader.classList.toggle('active', show);
+      }
+    }
+
+    // ============ وظائف ATS محسّنة ============
 
     const ATSSystems = {
       generic: {
@@ -1474,56 +2706,88 @@
         description: 'نظام عام يدعم معظم الميزات',
         supportsPhotos: true,
         supportedFormats: ['PDF', 'DOCX', 'TXT'],
-        recommendations: []
+        recommendations: [],
+        cssClass: 'resume-generic',
+        dateFormat: 'YYYY-MM',
+        contactLayout: 'horizontal',
+        sectionStyle: 'standard'
       },
       workday: {
         name: 'Workday',
         description: 'نظام Workday للموارد البشرية',
         supportsPhotos: false,
         supportedFormats: ['PDF', 'DOCX'],
-        recommendations: ['تجنب الصور والجداول المعقدة', 'استخدم تنسيق بسيط']
+        recommendations: ['تجنب الصور والجداول المعقدة', 'استخدم تنسيق بسيط'],
+        cssClass: 'resume-workday',
+        dateFormat: 'MM/YYYY',
+        contactLayout: 'horizontal',
+        sectionStyle: 'highlighted'
       },
       oracle: {
         name: 'Oracle/Taleo',
         description: 'نظام Oracle Taleo',
         supportsPhotos: false,
         supportedFormats: ['PDF', 'DOCX'],
-        recommendations: ['تجنب الصور', 'استخدم الخطوط القياسية']
+        recommendations: ['تجنب الصور', 'استخدم الخطوط القياسية'],
+        cssClass: 'resume-oracle',
+        dateFormat: 'Month YYYY',
+        contactLayout: 'vertical',
+        sectionStyle: 'underlined'
       },
       greenhouse: {
         name: 'Greenhouse',
         description: 'نظام Greenhouse للتوظيف',
         supportsPhotos: true,
         supportedFormats: ['PDF', 'DOCX'],
-        recommendations: []
+        recommendations: [],
+        cssClass: 'resume-greenhouse',
+        dateFormat: 'YYYY-MM',
+        contactLayout: 'horizontal',
+        sectionStyle: 'bordered'
       },
       icims: {
         name: 'iCIMS',
         description: 'نظام iCIMS',
         supportsPhotos: false,
         supportedFormats: ['PDF', 'DOCX'],
-        recommendations: ['تجنب الصور والعناصر المرئية المعقدة']
+        recommendations: ['تجنب الصور والعناصر المرئية المعقدة'],
+        cssClass: 'resume-icims',
+        dateFormat: 'MM/YYYY',
+        contactLayout: 'horizontal',
+        sectionStyle: 'boxed'
       },
       lever: {
         name: 'Lever',
         description: 'نظام Lever للتوظيف',
         supportsPhotos: true,
         supportedFormats: ['PDF', 'DOCX'],
-        recommendations: []
+        recommendations: [],
+        cssClass: 'resume-lever',
+        dateFormat: 'YYYY-MM',
+        contactLayout: 'vertical',
+        sectionStyle: 'standard'
       },
       smartrecruiters: {
         name: 'SmartRecruiters',
         description: 'نظام SmartRecruiters',
         supportsPhotos: true,
         supportedFormats: ['PDF', 'DOCX'],
-        recommendations: []
+        recommendations: [],
+        cssClass: 'resume-smartrecruiters',
+        dateFormat: 'MM/YYYY',
+        contactLayout: 'horizontal',
+        sectionStyle: 'highlighted'
       },
       bamboohr: {
         name: 'BambooHR',
         description: 'نظام BambooHR',
         supportsPhotos: true,
         supportedFormats: ['PDF', 'DOCX'],
-        recommendations: []
+        recommendations: [],
+        cssClass: 'resume-bamboohr',
+        dateFormat: 'Month YYYY',
+        contactLayout: 'horizontal',
+        sectionStyle: 'underlined'
       }
     };
 
@@ -1544,10 +2808,20 @@
         name: 'Minimal Template',
         atsFriendly: true,
         description: 'قالب بسيط وأنظف'
+      },
+      executive: {
+        name: 'Executive Template',
+        atsFriendly: true,
+        description: 'قالب احترافي للمديرين التنفيذيين'
+      },
+      academic: {
+        name: 'Academic Template',
+        atsFriendly: true,
+        description: 'قالب مناسب للسير الذاتية الأكاديمية'
       }
     };
 
-    // ============ بيانات افتراضية ============
+    // ============ بيانات افتراضية محسّنة ============
 
     const SampleData = {
       personalInfo: {
@@ -1556,7 +2830,7 @@
         phone: '+966 50 123 4567',
         location: 'الرياض، السعودية',
         website: 'https://example.com',
-        summary: 'مهندس برمجيات متمرس مع خبرة 5 سنوات في تطوير التطبيقات الويب والهاتف المحمول.'
+        summary: 'مهندس برمجيات متمرس مع خبرة 5 سنوات في تطوير التطبيقات الويب والهاتف المحمول. متخصص في React و Node.js مع خبرة في قواعد البيانات والأنظمة السحابية.'
       },
       experience: [
         {
@@ -1564,14 +2838,14 @@
           company: 'شركة التقنية المتقدمة',
           startDate: '2020-01',
           endDate: 'الحالي',
-          description: 'قيادة فريق التطوير وتصميم معماريات الأنظمة'
+          description: 'قيادة فريق التطوير وتصميم معماريات الأنظمة. تطوير تطبيقات ويب باستخدام أحدث التقنيات وضمان جودة الكود وأداء النظام.'
         },
         {
           jobTitle: 'مهندس برمجيات',
           company: 'شركة الحلول الرقمية',
           startDate: '2018-06',
           endDate: '2019-12',
-          description: 'تطوير تطبيقات ويب باستخدام React و Node.js'
+          description: 'تطوير تطبيقات ويب باستخدام React و Node.js. المشاركة في تصميم قواعد البيانات وتحسين أداء التطبيقات.'
         }
       ],
       education: [
@@ -1582,7 +2856,7 @@
           graduationDate: '2018-05'
         }
       ],
-      skills: ['JavaScript', 'React', 'Node.js', 'Python', 'SQL', 'Git'],
+      skills: ['JavaScript', 'React', 'Node.js', 'Python', 'SQL', 'Git', 'Docker', 'AWS'],
       certifications: [
         {
           certificateName: 'AWS Certified Solutions Architect',
@@ -1594,7 +2868,7 @@
         {
           projectName: 'تطبيق إدارة المشاريع',
           projectLink: 'https://github.com/example/project',
-          description: 'تطبيق ويب لإدارة المشاريع والمهام'
+          description: 'تطبيق ويب شامل لإدارة المشاريع والمهام مع واجهة مستخدم حديثة وإمكانيات التعاون الفوري.'
         }
       ]
     };
@@ -1620,69 +2894,111 @@
         case 'dashboard':
           app.innerHTML = renderHeader() + '<div id="app-content">' + renderDashboard() + '</div>' + renderFooter();
           break;
+        case 'contact':
+          app.innerHTML = renderHeader() + '<div id="app-content">' + renderContact() + '</div>' + renderFooter();
+          break;
         default:
           app.innerHTML = renderHeader() + '<div id="app-content">' + renderHome() + '</div>' + renderFooter();
       }
       
       attachEventListeners();
+      updateMobileMenu();
     }
 
     function renderHome() {
       return `
-        <main class="page">
+        <main>
           <section class="hero">
             <div class="container">
-              <h1>${t('appTitle')}</h1>
-              <p>${t('appSubtitle')}</p>
-              <button class="btn btn-secondary btn-large" onclick="navigateTo('builder')">
-                ${t('startNow')}
-              </button>
+              <div class="hero-content">
+                <h1>${t('heroTitle')}</h1>
+                <p class="subtitle">${t('heroSubtitle')}</p>
+                <div class="hero-buttons">
+                  <button class="btn btn-secondary btn-large" onclick="navigateTo('builder')">
+                    <i class="fas fa-rocket"></i> ${t('startNow')}
+                  </button>
+                  <button class="btn btn-outline btn-large" onclick="navigateTo('templates')">
+                    <i class="fas fa-eye"></i> ${t('quickTemplates')}
+                  </button>
+                </div>
+              </div>
             </div>
           </section>
 
-          <section class="section">
+          <section class="features-section">
             <div class="container">
               <div class="section-title">
-                <h2>${t('support')}</h2>
-                <p>اختر الخدمة التي تناسبك</p>
+                <h2>لماذا تختار CV Studio؟</h2>
+                <p>نحن نوفر لك كل ما تحتاجه لإنشاء سيرة ذاتية احترافية</p>
               </div>
               
-              <div class="services-grid">
-                <div class="service-card">
-                  <div class="service-icon">📝</div>
-                  <h3>${t('createProfessional')}</h3>
-                  <p>أنشئ سيرة ذاتية احترافية باستخدام قوالب مصممة بعناية</p>
-                  <button class="btn btn-primary" onclick="navigateTo('builder')">
-                    ${t('startNow')}
-                  </button>
+              <div class="features-grid">
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <i class="fas fa-file-alt"></i>
+                  </div>
+                  <h3>${t('feature1Title')}</h3>
+                  <p>${t('feature1Desc')}</p>
                 </div>
 
-                <div class="service-card">
-                  <div class="service-icon">👁️</div>
-                  <h3>${t('atsPreview')}</h3>
-                  <p>اعرض كيف سيقرأ نظام التوظيف سيرتك الذاتية</p>
-                  <button class="btn btn-primary" onclick="navigateTo('builder')">
-                    ${t('preview')}
-                  </button>
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                  </div>
+                  <h3>${t('feature2Title')}</h3>
+                  <p>${t('feature2Desc')}</p>
                 </div>
 
-                <div class="service-card">
-                  <div class="service-icon">🎨</div>
-                  <h3>${t('quickTemplates')}</h3>
-                  <p>اختر من بين قوالب متعددة ومخصصة</p>
-                  <button class="btn btn-primary" onclick="navigateTo('templates')">
-                    ${t('preview')}
-                  </button>
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <i class="fas fa-download"></i>
+                  </div>
+                  <h3>${t('feature3Title')}</h3>
+                  <p>${t('feature3Desc')}</p>
                 </div>
 
-                <div class="service-card">
-                  <div class="service-icon">💬</div>
-                  <h3>${t('support')}</h3>
-                  <p>احصل على نصائح وإرشادات لتحسين سيرتك الذاتية</p>
-                  <button class="btn btn-primary" onclick="alert('سيتم إضافة خدمة الدعم قريباً')">
-                    ${t('support')}
-                  </button>
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <i class="fas fa-eye"></i>
+                  </div>
+                  <h3>${t('feature4Title')}</h3>
+                  <p>${t('feature4Desc')}</p>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="stats-section">
+            <div class="container">
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <div class="stat-number">${t('stats1')}</div>
+                  <div class="stat-label">${t('stats1Label')}</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">${t('stats2')}</div>
+                  <div class="stat-label">${t('stats2Label')}</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">${t('stats3')}</div>
+                  <div class="stat-label">${t('stats3Label')}</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">${t('stats4')}</div>
+                  <div class="stat-label">${t('stats4Label')}</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="cta-section">
+            <div class="container">
+              <div class="cta-content">
+                <h2>${t('ctaTitle')}</h2>
+                <p>${t('ctaSubtitle')}</p>
+                <button class="btn btn-primary btn-large" onclick="navigateTo('builder')">
+                  <i class="fas fa-arrow-left"></i> ${t('startNow')}
+                </button>
               </div>
             </div>
           </section>
@@ -1696,69 +3012,75 @@
         `<div class="ats-warning">⚠️ ${t('atsNotSupportsPhoto')}</div>` : '';
 
       return `
-        <main class="builder-layout">
-          <aside class="builder-sidebar">
-            <h3 style="margin-bottom: 1rem;">${t('selectATS')}</h3>
-            <select id="ats-select" class="form-group" style="width: 100%; margin-bottom: 1rem;">
-              ${Object.entries(ATSSystems).map(([key, system]) => `
-                <option value="${key}" ${AppState.selectedATS === key ? 'selected' : ''}>
-                  ${system.name}
-                </option>
-              `).join('')}
-            </select>
-            
-            ${photoWarning}
+        <main class="page">
+          <div class="container">
+            <div class="builder-layout">
+              <aside class="builder-sidebar">
+                <h3 style="margin-bottom: 1rem;">${t('selectATS')}</h3>
+                <select id="ats-select" class="form-group" style="width: 100%; margin-bottom: 1rem;">
+                  ${Object.entries(ATSSystems).map(([key, system]) => `
+                    <option value="${key}" ${AppState.selectedATS === key ? 'selected' : ''}>
+                      ${system.name}
+                    </option>
+                  `).join('')}
+                </select>
+                
+                ${photoWarning}
 
-            <div style="margin-bottom: 1rem;">
-              <strong>${t('personalInfo')}</strong>
-            </div>
+                <div style="margin-bottom: 1rem;">
+                  <strong>الأقسام</strong>
+                </div>
 
-            <div class="nav-item active" onclick="switchSection('personal')">
-              📋 ${t('personalInfo')}
-            </div>
-            <div class="nav-item" onclick="switchSection('experience')">
-              💼 ${t('experience')}
-            </div>
-            <div class="nav-item" onclick="switchSection('education')">
-              🎓 ${t('education')}
-            </div>
-            <div class="nav-item" onclick="switchSection('skills')">
-              ⭐ ${t('skills')}
-            </div>
-            <div class="nav-item" onclick="switchSection('certifications')">
-              🏆 ${t('certifications')}
-            </div>
-            <div class="nav-item" onclick="switchSection('projects')">
-              🚀 ${t('projects')}
-            </div>
+                <div class="nav-item active" onclick="switchSection('personal', event)">
+                  📋 ${t('personalInfo')}
+                </div>
+                <div class="nav-item" onclick="switchSection('experience', event)">
+                  💼 ${t('experience')}
+                </div>
+                <div class="nav-item" onclick="switchSection('education', event)">
+                  🎓 ${t('education')}
+                </div>
+                <div class="nav-item" onclick="switchSection('skills', event)">
+                  ⭐ ${t('skills')}
+                </div>
+                <div class="nav-item" onclick="switchSection('certifications', event)">
+                  🏆 ${t('certifications')}
+                </div>
+                <div class="nav-item" onclick="switchSection('projects', event)">
+                  🚀 ${t('projects')}
+                </div>
 
-            <div style="margin-top: 2rem; display: flex; gap: 0.5rem;">
-              <button class="btn btn-primary btn-small" onclick="saveDraft()" style="flex: 1;">
-                💾 ${t('saveDraft')}
-              </button>
-              <button class="btn btn-secondary btn-small" onclick="exportPDF()" style="flex: 1;">
-                📥 ${t('exportPDF')}
-              </button>
-            </div>
-          </aside>
+                <div style="margin-top: 2rem; display: flex; gap: 0.5rem;">
+                  <button class="btn btn-primary btn-small" onclick="saveDraft()" style="flex: 1;">
+                    <i class="fas fa-save"></i> ${t('saveDraft')}
+                  </button>
+                  <button class="btn btn-secondary btn-small" onclick="exportPDF()" style="flex: 1;">
+                    <i class="fas fa-download"></i> ${t('exportPDF')}
+                  </button>
+                </div>
+              </aside>
 
-          <div class="builder-form">
-            <div id="form-section">
-              <!-- سيتم ملؤه ديناميكياً -->
-            </div>
-          </div>
+              <div class="builder-content">
+                <div class="builder-form">
+                  <div id="form-section">
+                    <!-- سيتم ملؤه ديناميكياً -->
+                  </div>
+                </div>
 
-          <div class="builder-preview">
-            <div style="margin-bottom: 1rem; display: flex; gap: 0.5rem;">
-              <button class="btn btn-outline btn-small" onclick="togglePreviewMode('formatted')" style="flex: 1;">
-                ${t('viewAsFormatted')}
-              </button>
-              <button class="btn btn-outline btn-small" onclick="togglePreviewMode('text')" style="flex: 1;">
-                ${t('viewAsText')}
-              </button>
-            </div>
-            <div id="preview-section" class="resume-template">
-              <!-- سيتم ملؤه ديناميكياً -->
+                <div class="builder-preview">
+                  <div style="margin-bottom: 1rem; display: flex; gap: 0.5rem;">
+                    <button class="btn btn-outline btn-small" onclick="togglePreviewMode('formatted')" style="flex: 1;">
+                      <i class="fas fa-eye"></i> ${t('viewAsFormatted')}
+                    </button>
+                    <button class="btn btn-outline btn-small" onclick="togglePreviewMode('text')" style="flex: 1;">
+                      <i class="fas fa-file-alt"></i> ${t('viewAsText')}
+                    </button>
+                  </div>
+                  <div id="preview-section" class="resume-container">
+                    <!-- سيتم ملؤه ديناميكياً -->
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </main>
@@ -1779,7 +3101,7 @@
                 ${Object.entries(ResumeTemplates).map(([key, template]) => `
                   <div class="template-card" onclick="selectTemplate('${key}')">
                     <div class="template-preview">
-                      ${template.name}
+                      <i class="fas fa-file-alt"></i>
                     </div>
                     <div class="template-info">
                       <h3>${template.name}</h3>
@@ -1808,13 +3130,17 @@
               <div class="auth-info">
                 <h2>${AppState.authMode === 'login' ? t('welcomeBack') : t('createAccount')}</h2>
                 <p>${AppState.authMode === 'login' ? t('loginDesc') : t('signupDesc')}</p>
-                <div class="service-card" style="background-color: rgba(255, 255, 255, 0.1); color: white; margin-bottom: 1rem;">
-                  <div class="service-icon" style="background-color: rgba(255, 255, 255, 0.2);">📝</div>
+                <div class="feature-card" style="background-color: rgba(255, 255, 255, 0.1); color: white; margin-bottom: 1rem;">
+                  <div class="feature-icon" style="background-color: rgba(255, 255, 255, 0.2);">
+                    <i class="fas fa-file-alt"></i>
+                  </div>
                   <h3 style="color: white;">${t('createProfessional')}</h3>
                   <p>أنشئ سيرة ذاتية احترافية باستخدام قوالب مصممة بعناية</p>
                 </div>
-                <div class="service-card" style="background-color: rgba(255, 255, 255, 0.1); color: white;">
-                  <div class="service-icon" style="background-color: rgba(255, 255, 255, 0.2);">👁️</div>
+                <div class="feature-card" style="background-color: rgba(255, 255, 255, 0.1); color: white;">
+                  <div class="feature-icon" style="background-color: rgba(255, 255, 255, 0.2);">
+                    <i class="fas fa-search"></i>
+                  </div>
                   <h3 style="color: white;">${t('atsPreview')}</h3>
                   <p>اعرض كيف سيقرأ نظام التوظيف سيرتك الذاتية</p>
                 </div>
@@ -1870,10 +3196,10 @@
 
         <div class="social-login">
           <button class="social-btn" onclick="alert('Google login mock')">
-            🔵 Google
+            <i class="fab fa-google"></i> Google
           </button>
           <button class="social-btn" onclick="alert('Facebook login mock')">
-            🔵 Facebook
+            <i class="fab fa-facebook"></i> Facebook
           </button>
         </div>
       `;
@@ -1918,10 +3244,10 @@
 
         <div class="social-login">
           <button class="social-btn" onclick="alert('Google signup mock')">
-            🔵 Google
+            <i class="fab fa-google"></i> Google
           </button>
           <button class="social-btn" onclick="alert('Facebook signup mock')">
-            🔵 Facebook
+            <i class="fab fa-facebook"></i> Facebook
           </button>
         </div>
       `;
@@ -1940,7 +3266,7 @@
               <div class="flex-between" style="margin-bottom: 2rem;">
                 <h2>${t('myResumes')}</h2>
                 <button class="btn btn-primary" onclick="navigateTo('builder')">
-                  ➕ ${t('newResume')}
+                  <i class="fas fa-plus"></i> ${t('newResume')}
                 </button>
               </div>
 
@@ -1958,14 +3284,102 @@
                     </div>
                     <div class="resume-item-actions">
                       <button class="btn btn-primary btn-small" onclick="navigateTo('builder')">
-                        ${t('edit')}
+                        <i class="fas fa-edit"></i> ${t('edit')}
                       </button>
                       <button class="btn btn-outline btn-small" onclick="alert('معاينة السيرة')">
-                        ${t('preview')}
+                        <i class="fas fa-eye"></i> ${t('preview')}
                       </button>
                     </div>
                   </div>
                 `).join('')}
+              </div>
+            </div>
+          </section>
+        </main>
+      `;
+    }
+
+    function renderContact() {
+      return `
+        <main class="page">
+          <section class="section">
+            <div class="container">
+              <div class="contact-container">
+                <div class="contact-wrapper">
+                  <div class="contact-info">
+                    <h2>${t('contactTitle')}</h2>
+                    <p>${t('contactSubtitle')}</p>
+                    
+                    <div class="contact-item">
+                      <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                      </div>
+                      <div class="contact-details">
+                        <h4>${t('contactEmail')}</h4>
+                        <p>support@cvstudio.com</p>
+                      </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                      <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                      </div>
+                      <div class="contact-details">
+                        <h4>${t('contactPhone')}</h4>
+                        <p>+966 50 123 4567</p>
+                      </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                      <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                      </div>
+                      <div class="contact-details">
+                        <h4>${t('contactAddress')}</h4>
+                        <p>الرياض، المملكة العربية السعودية</p>
+                      </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                      <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                      </div>
+                      <div class="contact-details">
+                        <h4>${t('contactHours')}</h4>
+                        <p>الأحد - الخميس: 9:00 ص - 5:00 م</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="contact-form">
+                    <h3>أرسل لنا رسالة</h3>
+                    <form onsubmit="handleContactSubmit(event)">
+                      <div class="form-group">
+                        <label>${t('contactName')}</label>
+                        <input type="text" required placeholder="أدخل اسمك الكامل">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label>${t('email')}</label>
+                        <input type="email" required placeholder="your@email.com">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label>${t('contactSubject')}</label>
+                        <input type="text" required placeholder="موضوع الرسالة">
+                      </div>
+                      
+                      <div class="form-group">
+                        <label>${t('contactMessage')}</label>
+                        <textarea required rows="5" placeholder="اكتب رسالتك هنا..."></textarea>
+                      </div>
+                      
+                      <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> ${t('contactSend')}
+                      </button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -1978,36 +3392,41 @@
         <header>
           <div class="container">
             <div class="header-content">
-              <div class="logo">
+              <a href="#" onclick="navigateTo('home')" class="logo">
                 <div class="logo-icon">CV</div>
                 <span>${t('appTitle')}</span>
-              </div>
+              </a>
               <nav>
-                <button class="mobile-nav-toggle" aria-label="Toggle menu" onclick="toggleMobileNav()">☰</button>
+                <button class="mobile-nav-toggle" aria-label="Toggle menu" onclick="toggleMobileMenu()">
+                  <i class="fas fa-bars"></i>
+                </button>
                 <div id="main-nav" class="main-nav">
-                  <a href="#" onclick="navigateTo('home')" class="${AppState.currentPage === 'home' ? 'active' : ''}">
-                    ${t('home')}
+                  <a href="#" onclick="navigateTo('home')" class="${AppState.currentPage === 'home' ? 'active' : ''} nav-link">
+                    <i class="fas fa-home"></i> ${t('home')}
                   </a>
-                  <a href="#" onclick="navigateTo('builder')" class="${AppState.currentPage === 'builder' ? 'active' : ''}">
-                    ${t('builder')}
+                  <a href="#" onclick="navigateTo('builder')" class="${AppState.currentPage === 'builder' ? 'active' : ''} nav-link">
+                    <i class="fas fa-edit"></i> ${t('builder')}
                   </a>
-                  <a href="#" onclick="navigateTo('templates')" class="${AppState.currentPage === 'templates' ? 'active' : ''}">
-                    ${t('templates')}
+                  <a href="#" onclick="navigateTo('templates')" class="${AppState.currentPage === 'templates' ? 'active' : ''} nav-link">
+                    <i class="fas fa-file-alt"></i> ${t('templates')}
+                  </a>
+                  <a href="#" onclick="navigateTo('contact')" class="${AppState.currentPage === 'contact' ? 'active' : ''} nav-link">
+                    <i class="fas fa-envelope"></i> ${t('contact')}
                   </a>
                   ${AppState.userAuth.isLoggedIn ? `
-                    <a href="#" onclick="navigateTo('dashboard')" class="${AppState.currentPage === 'dashboard' ? 'active' : ''}">
-                      ${t('dashboard')}
+                    <a href="#" onclick="navigateTo('dashboard')" class="${AppState.currentPage === 'dashboard' ? 'active' : ''} nav-link">
+                      <i class="fas fa-tachometer-alt"></i> ${t('dashboard')}
                     </a>
                     <button class="btn btn-outline btn-small" onclick="logout()">
-                      ${t('logout')}
+                      <i class="fas fa-sign-out-alt"></i> ${t('logout')}
                     </button>
                   ` : `
                     <button class="btn btn-primary btn-small" onclick="navigateTo('auth')">
-                      ${t('login')}
+                      <i class="fas fa-sign-in-alt"></i> ${t('login')}
                     </button>
                   `}
                   <button class="lang-toggle" onclick="toggleLanguage()">
-                    ${AppState.currentLanguage === 'ar' ? 'EN' : 'AR'}
+                    <i class="fas fa-globe"></i> ${AppState.currentLanguage === 'ar' ? 'EN' : 'AR'}
                   </button>
                 </div>
               </nav>
@@ -2025,44 +3444,68 @@
               <div class="footer-section">
                 <h4>${t('appTitle')}</h4>
                 <p>${t('footerDescription')}</p>
+                <div class="social-links">
+                  <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                  <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                  <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                  <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
               </div>
               <div class="footer-section">
                 <h4>${t('footerLinks')}</h4>
                 <ul>
-                  <li><a href="#" onclick="navigateTo('home')">${t('home')}</a></li>
-                  <li><a href="#" onclick="navigateTo('templates')">${t('templates')}</a></li>
-                  <li><a href="#" onclick="alert('سيتم إضافة صفحة الأسئلة الشائعة')">${t('footerFAQ')}</a></li>
+                  <li><a href="#" onclick="navigateTo('home')" class="nav-link">${t('home')}</a></li>
+                  <li><a href="#" onclick="navigateTo('templates')" class="nav-link">${t('templates')}</a></li>
+                  <li><a href="#" onclick="alert('سيتم إضافة صفحة الأسئلة الشائعة')" class="nav-link">${t('footerFAQ')}</a></li>
                 </ul>
               </div>
               <div class="footer-section">
                 <h4>${t('footerContact')}</h4>
                 <ul>
                   <li><a href="mailto:support@cvstudio.com">support@cvstudio.com</a></li>
+                  <li><a href="#">+966 50 123 4567</a></li>
                   <li><a href="#">${t('footerTwitter')}</a></li>
                   <li><a href="#">${t('footerLinkedIn')}</a></li>
                 </ul>
               </div>
             </div>
             <div class="footer-bottom">
-              <p style="color: #FFFFFF;">&copy; 2024 CV Studio. ${t('footerCopyright')}.</p>
+              <p>&copy; 2024 CV Studio. ${t('footerCopyright')}.</p>
             </div>
           </div>
         </footer>
       `;
     }
 
-    // ============ وظائف التفاعل ============
+    // ============ وظائف التفاعل محسّنة ============
 
-    function switchSection(section) {
-      // تحديث الأقسام النشطة
+    function switchSection(section, evt) {
       document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
       });
-      event.target.closest('.nav-item').classList.add('active');
 
-      // عرض النموذج المناسب
+      if (evt && evt.target) {
+        const el = evt.target.closest('.nav-item');
+        if (el) el.classList.add('active');
+      }
+
       renderFormSection(section);
       updatePreview();
+
+      const formSection = document.getElementById('form-section');
+      if (formSection) {
+        const inputs = Array.from(formSection.querySelectorAll('input, textarea, select'));
+        let el = null;
+        if (inputs.length) {
+          el = inputs.find(i => (i.value || '').trim() === '') || inputs[0];
+        }
+        if (el) {
+          setTimeout(() => {
+            try { el.focus(); } catch (e) {}
+            try { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+          }, 120);
+        }
+      }
     }
 
     function renderFormSection(section) {
@@ -2074,40 +3517,47 @@
           formSection.innerHTML = `
             <h3>${t('personalInfo')}</h3>
             <div class="form-group">
-              <label>${t('fullName')}</label>
+              <label>${t('fullName')} *</label>
               <input type="text" id="fullName" value="${data.personalInfo.fullName}" 
-                     onchange="updateResumeData('personalInfo', 'fullName', this.value); updatePreview();">
+                     onchange="updateResumeData('personalInfo', 'fullName', this.value); updatePreview();"
+                     placeholder="أدخل اسمك الكامل">
             </div>
             <div class="form-group">
-              <label>${t('email')}</label>
+              <label>${t('email')} *</label>
               <input type="email" id="email" value="${data.personalInfo.email}"
-                     onchange="updateResumeData('personalInfo', 'email', this.value); updatePreview();">
+                     onchange="updateResumeData('personalInfo', 'email', this.value); updatePreview();"
+                     placeholder="example@email.com">
             </div>
             <div class="form-group">
-              <label>${t('phone')}</label>
+              <label>${t('phone')} *</label>
               <input type="tel" id="phone" value="${data.personalInfo.phone}"
-                     onchange="updateResumeData('personalInfo', 'phone', this.value); updatePreview();">
+                     onchange="updateResumeData('personalInfo', 'phone', this.value); updatePreview();"
+                     placeholder="+966 50 123 4567">
             </div>
             <div class="form-group">
               <label>${t('location')}</label>
               <input type="text" id="location" value="${data.personalInfo.location}"
-                     onchange="updateResumeData('personalInfo', 'location', this.value); updatePreview();">
+                     onchange="updateResumeData('personalInfo', 'location', this.value); updatePreview();"
+                     placeholder="الرياض، السعودية">
             </div>
             <div class="form-group">
               <label>${t('website')}</label>
               <input type="url" id="website" value="${data.personalInfo.website}"
-                     onchange="updateResumeData('personalInfo', 'website', this.value); updatePreview();">
+                     onchange="updateResumeData('personalInfo', 'website', this.value); updatePreview();"
+                     placeholder="https://example.com">
             </div>
             <div class="form-group">
               <label>${t('summary')}</label>
-              <textarea id="summary" onchange="updateResumeData('personalInfo', 'summary', this.value); updatePreview();">${data.personalInfo.summary}</textarea>
+              <textarea id="summary" onchange="updateResumeData('personalInfo', 'summary', this.value); updatePreview();"
+                        placeholder="اكتب ملخصاً مهنياً عن نفسك...">${data.personalInfo.summary}</textarea>
             </div>
-            <div class="form-group">
-              <label>صورة شخصية (اختياري)</label>
-              <input type="file" id="photo" accept="image/*" onchange="handlePhotoUpload(event);">
-              ${!ATSSystems[AppState.selectedATS].supportsPhotos ? 
-                `<div class="form-hint" style="color: #F59E0B;">${t('photoWarning')}</div>` : ''}
-            </div>
+            ${ATSSystems[AppState.selectedATS].supportsPhotos ? `
+              <div class="form-group">
+                <label>صورة شخصية (اختياري)</label>
+                <input type="file" id="photo" accept="image/*" onchange="handlePhotoUpload(event);">
+                <div class="form-hint">PNG أو JPG، الحد الأقصى 2MB</div>
+              </div>
+            ` : ''}
           `;
           break;
 
@@ -2117,36 +3567,40 @@
             ${data.experience.map((exp, idx) => `
               <div class="card" style="margin-bottom: 1rem;">
                 <div class="form-group">
-                  <label>${t('jobTitle')}</label>
+                  <label>${t('jobTitle')} *</label>
                   <input type="text" value="${exp.jobTitle}" 
-                         onchange="updateExperience(${idx}, 'jobTitle', this.value); updatePreview();">
+                         onchange="updateExperience(${idx}, 'jobTitle', this.value); updatePreview();"
+                         placeholder="مثال: مهندس برمجيات">
                 </div>
                 <div class="form-group">
-                  <label>${t('company')}</label>
+                  <label>${t('company')} *</label>
                   <input type="text" value="${exp.company}"
-                         onchange="updateExperience(${idx}, 'company', this.value); updatePreview();">
+                         onchange="updateExperience(${idx}, 'company', this.value); updatePreview();"
+                         placeholder="مثال: شركة التقنية">
                 </div>
                 <div class="form-group">
                   <label>${t('startDate')}</label>
-                  <input type="date" value="${exp.startDate}"
+                  <input type="month" value="${exp.startDate}"
                          onchange="updateExperience(${idx}, 'startDate', this.value); updatePreview();">
                 </div>
                 <div class="form-group">
                   <label>${t('endDate')}</label>
-                  <input type="date" value="${exp.endDate}"
+                  <input type="month" value="${exp.endDate}"
                          onchange="updateExperience(${idx}, 'endDate', this.value); updatePreview();">
+                  <div class="form-hint">اتركه فارغاً إذا كنت تعمل حالياً</div>
                 </div>
                 <div class="form-group">
                   <label>${t('description')}</label>
-                  <textarea onchange="updateExperience(${idx}, 'description', this.value); updatePreview();">${exp.description}</textarea>
+                  <textarea onchange="updateExperience(${idx}, 'description', this.value); updatePreview();"
+                            placeholder="صف مسؤولياتك وإنجازاتك...">${exp.description}</textarea>
                 </div>
                 <button class="btn btn-outline btn-small" onclick="removeExperience(${idx}); updatePreview();">
-                  ${t('delete')}
+                  <i class="fas fa-trash"></i> ${t('delete')}
                 </button>
               </div>
             `).join('')}
             <button class="btn btn-primary" onclick="addExperience(); switchSection('experience');">
-              + ${t('add')} ${t('experience')}
+              <i class="fas fa-plus"></i> ${t('add')} ${t('experience')}
             </button>
           `;
           break;
@@ -2157,32 +3611,35 @@
             ${data.education.map((edu, idx) => `
               <div class="card" style="margin-bottom: 1rem;">
                 <div class="form-group">
-                  <label>${t('degree')}</label>
+                  <label>${t('degree')} *</label>
                   <input type="text" value="${edu.degree}"
-                         onchange="updateEducation(${idx}, 'degree', this.value); updatePreview();">
+                         onchange="updateEducation(${idx}, 'degree', this.value); updatePreview();"
+                         placeholder="مثال: بكالوريوس">
                 </div>
                 <div class="form-group">
-                  <label>${t('field')}</label>
+                  <label>${t('field')} *</label>
                   <input type="text" value="${edu.field}"
-                         onchange="updateEducation(${idx}, 'field', this.value); updatePreview();">
+                         onchange="updateEducation(${idx}, 'field', this.value); updatePreview();"
+                         placeholder="مثال: هندسة البرمجيات">
                 </div>
                 <div class="form-group">
-                  <label>${t('institution')}</label>
+                  <label>${t('institution')} *</label>
                   <input type="text" value="${edu.institution}"
-                         onchange="updateEducation(${idx}, 'institution', this.value); updatePreview();">
+                         onchange="updateEducation(${idx}, 'institution', this.value); updatePreview();"
+                         placeholder="مثال: جامعة الملك سعود">
                 </div>
                 <div class="form-group">
                   <label>${t('graduationDate')}</label>
-                  <input type="date" value="${edu.graduationDate}"
+                  <input type="month" value="${edu.graduationDate}"
                          onchange="updateEducation(${idx}, 'graduationDate', this.value); updatePreview();">
                 </div>
                 <button class="btn btn-outline btn-small" onclick="removeEducation(${idx}); updatePreview();">
-                  ${t('delete')}
+                  <i class="fas fa-trash"></i> ${t('delete')}
                 </button>
               </div>
             `).join('')}
             <button class="btn btn-primary" onclick="addEducation(); switchSection('education');">
-              + ${t('add')} ${t('education')}
+              <i class="fas fa-plus"></i> ${t('add')} ${t('education')}
             </button>
           `;
           break;
@@ -2194,15 +3651,16 @@
               <div class="form-group">
                 <div class="flex-between">
                   <input type="text" value="${skill}" style="flex: 1;"
-                         onchange="updateSkill(${idx}, this.value); updatePreview();">
+                         onchange="updateSkill(${idx}, this.value); updatePreview();"
+                         placeholder="مثال: JavaScript">
                   <button class="btn btn-outline btn-small" onclick="removeSkill(${idx}); updatePreview();" style="margin-right: 0.5rem;">
-                    ✕
+                    <i class="fas fa-times"></i>
                   </button>
                 </div>
               </div>
             `).join('')}
             <button class="btn btn-primary" onclick="addSkill(); switchSection('skills');">
-              + ${t('add')} ${t('skills')}
+              <i class="fas fa-plus"></i> ${t('add')} ${t('skills')}
             </button>
           `;
           break;
@@ -2213,27 +3671,29 @@
             ${data.certifications.map((cert, idx) => `
               <div class="card" style="margin-bottom: 1rem;">
                 <div class="form-group">
-                  <label>${t('certificateName')}</label>
+                  <label>${t('certificateName')} *</label>
                   <input type="text" value="${cert.certificateName}"
-                         onchange="updateCertification(${idx}, 'certificateName', this.value); updatePreview();">
+                         onchange="updateCertification(${idx}, 'certificateName', this.value); updatePreview();"
+                         placeholder="مثال: AWS Certified">
                 </div>
                 <div class="form-group">
-                  <label>${t('issuer')}</label>
+                  <label>${t('issuer')} *</label>
                   <input type="text" value="${cert.issuer}"
-                         onchange="updateCertification(${idx}, 'issuer', this.value); updatePreview();">
+                         onchange="updateCertification(${idx}, 'issuer', this.value); updatePreview();"
+                         placeholder="مثال: Amazon Web Services">
                 </div>
                 <div class="form-group">
                   <label>${t('issueDate')}</label>
-                  <input type="date" value="${cert.issueDate}"
+                  <input type="month" value="${cert.issueDate}"
                          onchange="updateCertification(${idx}, 'issueDate', this.value); updatePreview();">
                 </div>
                 <button class="btn btn-outline btn-small" onclick="removeCertification(${idx}); updatePreview();">
-                  ${t('delete')}
+                  <i class="fas fa-trash"></i> ${t('delete')}
                 </button>
               </div>
             `).join('')}
             <button class="btn btn-primary" onclick="addCertification(); switchSection('certifications');">
-              + ${t('add')} ${t('certifications')}
+              <i class="fas fa-plus"></i> ${t('add')} ${t('certifications')}
             </button>
           `;
           break;
@@ -2244,26 +3704,29 @@
             ${data.projects.map((proj, idx) => `
               <div class="card" style="margin-bottom: 1rem;">
                 <div class="form-group">
-                  <label>${t('projectName')}</label>
+                  <label>${t('projectName')} *</label>
                   <input type="text" value="${proj.projectName}"
-                         onchange="updateProject(${idx}, 'projectName', this.value); updatePreview();">
+                         onchange="updateProject(${idx}, 'projectName', this.value); updatePreview();"
+                         placeholder="مثال: تطبيق إدارة المهام">
                 </div>
                 <div class="form-group">
                   <label>${t('projectLink')}</label>
                   <input type="url" value="${proj.projectLink}"
-                         onchange="updateProject(${idx}, 'projectLink', this.value); updatePreview();">
+                         onchange="updateProject(${idx}, 'projectLink', this.value); updatePreview();"
+                         placeholder="https://github.com/username/project">
                 </div>
                 <div class="form-group">
                   <label>${t('description')}</label>
-                  <textarea onchange="updateProject(${idx}, 'description', this.value); updatePreview();">${proj.description}</textarea>
+                  <textarea onchange="updateProject(${idx}, 'description', this.value); updatePreview();"
+                            placeholder="صف المشروع والتقنيات المستخدمة...">${proj.description}</textarea>
                 </div>
                 <button class="btn btn-outline btn-small" onclick="removeProject(${idx}); updatePreview();">
-                  ${t('delete')}
+                  <i class="fas fa-trash"></i> ${t('delete')}
                 </button>
               </div>
             `).join('')}
             <button class="btn btn-primary" onclick="addProject(); switchSection('projects');">
-              + ${t('add')} ${t('projects')}
+              <i class="fas fa-plus"></i> ${t('add')} ${t('projects')}
             </button>
           `;
           break;
@@ -2369,28 +3832,63 @@
       saveToLocalStorage();
     }
 
+    // ============ تحديث المعاينة مع دعم ATS محسّن ============
+
     function updatePreview() {
       const previewSection = document.getElementById('preview-section');
       if (!previewSection) return;
 
       const data = AppState.resumeData;
       const atsSystem = ATSSystems[AppState.selectedATS];
+      
+      // إضافة كلاس النظام ATS
+      previewSection.className = `resume-container ${atsSystem.cssClass}`;
+
+      // تنسيق التاريخ حسب النظام
+      function formatDate(dateStr) {
+        if (!dateStr || dateStr === 'الحالي') return dateStr;
+        
+        const [year, month] = dateStr.split('-');
+        const monthNames = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+                           'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+        
+        switch(atsSystem.dateFormat) {
+          case 'MM/YYYY':
+            return `${month}/${year}`;
+          case 'Month YYYY':
+            return `${monthNames[parseInt(month) - 1]} ${year}`;
+          default:
+            return `${year}-${month}`;
+        }
+      }
+
+      // بناء معلومات الاتصال حسب التخطيط
+      const contactItems = [];
+      if (data.personalInfo.email) {
+        contactItems.push(`<div class="contact-item">📧 ${escapeHTML(data.personalInfo.email)}</div>`);
+      }
+      if (data.personalInfo.phone) {
+        contactItems.push(`<div class="contact-item">☎️ ${escapeHTML(data.personalInfo.phone)}</div>`);
+      }
+      if (data.personalInfo.location) {
+        contactItems.push(`<div class="contact-item">📍 ${escapeHTML(data.personalInfo.location)}</div>`);
+      }
+      if (data.personalInfo.website) {
+        contactItems.push(`<div class="contact-item">🌐 ${escapeHTML(data.personalInfo.website)}</div>`);
+      }
 
       previewSection.innerHTML = `
         <div class="resume-header">
-          <div class="resume-name">${data.personalInfo.fullName || 'الاسم'}</div>
+          <div class="resume-name">${escapeHTML(data.personalInfo.fullName) || 'الاسم الكامل'}</div>
           <div class="resume-contact">
-            ${data.personalInfo.email ? `📧 ${data.personalInfo.email}` : ''}
-            ${data.personalInfo.phone ? ` | ☎️ ${data.personalInfo.phone}` : ''}
-            ${data.personalInfo.location ? ` | 📍 ${data.personalInfo.location}` : ''}
+            ${contactItems.join('')}
           </div>
-          ${data.personalInfo.website ? `<div class="resume-contact">🌐 ${data.personalInfo.website}</div>` : ''}
         </div>
 
         ${data.personalInfo.summary ? `
           <div class="resume-section">
             <div class="resume-section-title">${t('summary')}</div>
-            <div class="resume-entry-description">${data.personalInfo.summary}</div>
+            <div class="resume-entry-description">${escapeHTML(data.personalInfo.summary)}</div>
           </div>
         ` : ''}
 
@@ -2399,9 +3897,12 @@
             <div class="resume-section-title">${t('experience')}</div>
             ${data.experience.map(exp => `
               <div class="resume-entry">
-                <div class="resume-entry-title">${exp.jobTitle || 'المسمى الوظيفي'}</div>
-                <div class="resume-entry-subtitle">${exp.company || 'الشركة'} | ${exp.startDate || 'التاريخ'}</div>
-                ${exp.description ? `<div class="resume-entry-description">${exp.description}</div>` : ''}
+                <div class="resume-entry-header">
+                  <div class="resume-entry-title">${escapeHTML(exp.jobTitle) || 'المسمى الوظيفي'}</div>
+                  <div class="resume-entry-date">${formatDate(exp.startDate)} - ${exp.endDate ? formatDate(exp.endDate) : 'حالياً'}</div>
+                </div>
+                <div class="resume-entry-subtitle">${escapeHTML(exp.company) || 'الشركة'}</div>
+                ${exp.description ? `<div class="resume-entry-description">${escapeHTML(exp.description)}</div>` : ''}
               </div>
             `).join('')}
           </div>
@@ -2412,8 +3913,11 @@
             <div class="resume-section-title">${t('education')}</div>
             ${data.education.map(edu => `
               <div class="resume-entry">
-                <div class="resume-entry-title">${edu.degree || 'الدرجة'} في ${edu.field || 'التخصص'}</div>
-                <div class="resume-entry-subtitle">${edu.institution || 'المؤسسة'} | ${edu.graduationDate || 'التاريخ'}</div>
+                <div class="resume-entry-header">
+                  <div class="resume-entry-title">${escapeHTML(edu.degree)} في ${escapeHTML(edu.field)}</div>
+                  <div class="resume-entry-date">${formatDate(edu.graduationDate)}</div>
+                </div>
+                <div class="resume-entry-subtitle">${escapeHTML(edu.institution)}</div>
               </div>
             `).join('')}
           </div>
@@ -2422,11 +3926,9 @@
         ${data.skills.length > 0 ? `
           <div class="resume-section">
             <div class="resume-section-title">${t('skills')}</div>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-              ${data.skills.map(skill => `
-                <span style="background: #E5E7EB; padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.875rem;">
-                  ${skill || 'مهارة'}
-                </span>
+            <div class="resume-skills">
+              ${data.skills.filter(skill => skill.trim()).map(skill => `
+                <span class="skill-tag">${escapeHTML(skill)}</span>
               `).join('')}
             </div>
           </div>
@@ -2437,8 +3939,11 @@
             <div class="resume-section-title">${t('certifications')}</div>
             ${data.certifications.map(cert => `
               <div class="resume-entry">
-                <div class="resume-entry-title">${cert.certificateName || 'الشهادة'}</div>
-                <div class="resume-entry-subtitle">${cert.issuer || 'الجهة'} | ${cert.issueDate || 'التاريخ'}</div>
+                <div class="resume-entry-header">
+                  <div class="resume-entry-title">${escapeHTML(cert.certificateName)}</div>
+                  <div class="resume-entry-date">${formatDate(cert.issueDate)}</div>
+                </div>
+                <div class="resume-entry-subtitle">${escapeHTML(cert.issuer)}</div>
               </div>
             `).join('')}
           </div>
@@ -2449,9 +3954,9 @@
             <div class="resume-section-title">${t('projects')}</div>
             ${data.projects.map(proj => `
               <div class="resume-entry">
-                <div class="resume-entry-title">${proj.projectName || 'المشروع'}</div>
-                ${proj.projectLink ? `<div class="resume-entry-subtitle">🔗 ${proj.projectLink}</div>` : ''}
-                ${proj.description ? `<div class="resume-entry-description">${proj.description}</div>` : ''}
+                <div class="resume-entry-title">${escapeHTML(proj.projectName)}</div>
+                ${proj.projectLink ? `<div class="resume-entry-subtitle">🔗 ${escapeHTML(proj.projectLink)}</div>` : ''}
+                ${proj.description ? `<div class="resume-entry-description">${escapeHTML(proj.description)}</div>` : ''}
               </div>
             `).join('')}
           </div>
@@ -2462,11 +3967,61 @@
     function togglePreviewMode(mode) {
       const previewSection = document.getElementById('preview-section');
       if (mode === 'text') {
-        const text = previewSection.innerText;
+        const text = generateTextResume();
         previewSection.innerHTML = `<div class="resume-text-view">${text}</div>`;
       } else {
         updatePreview();
       }
+    }
+
+    function generateTextResume() {
+      const data = AppState.resumeData;
+      let text = '';
+      
+      // الاسم
+      text += data.personalInfo.fullName + '\n\n';
+      
+      // معلومات الاتصال
+      const contact = [];
+      if (data.personalInfo.email) contact.push(`Email: ${data.personalInfo.email}`);
+      if (data.personalInfo.phone) contact.push(`Phone: ${data.personalInfo.phone}`);
+      if (data.personalInfo.location) contact.push(`Location: ${data.personalInfo.location}`);
+      if (data.personalInfo.website) contact.push(`Website: ${data.personalInfo.website}`);
+      text += contact.join(' | ') + '\n\n';
+      
+      // الملخص
+      if (data.personalInfo.summary) {
+        text += 'SUMMARY\n' + '='.repeat(20) + '\n';
+        text += data.personalInfo.summary + '\n\n';
+      }
+      
+      // الخبرة
+      if (data.experience.length > 0) {
+        text += 'EXPERIENCE\n' + '='.repeat(20) + '\n';
+        data.experience.forEach(exp => {
+          text += `${exp.jobTitle} - ${exp.company}\n`;
+          text += `${exp.startDate} - ${exp.endDate || 'Present'}\n`;
+          if (exp.description) text += exp.description + '\n';
+          text += '\n';
+        });
+      }
+      
+      // التعليم
+      if (data.education.length > 0) {
+        text += 'EDUCATION\n' + '='.repeat(20) + '\n';
+        data.education.forEach(edu => {
+          text += `${edu.degree} in ${edu.field}\n`;
+          text += `${edu.institution} - ${edu.graduationDate}\n\n`;
+        });
+      }
+      
+      // المهارات
+      if (data.skills.length > 0) {
+        text += 'SKILLS\n' + '='.repeat(20) + '\n';
+        text += data.skills.filter(s => s.trim()).join(', ') + '\n\n';
+      }
+      
+      return text;
     }
 
     function selectTemplate(templateKey) {
@@ -2475,17 +4030,41 @@
     }
 
     function toggleLanguage() {
-      setLanguage(AppState.currentLanguage === 'ar' ? 'en' : 'ar');
+      const newLang = AppState.currentLanguage === 'ar' ? 'en' : 'ar';
+      setLanguage(newLang);
     }
 
     function saveDraft() {
+      if (!validateResumeData()) {
+        return;
+      }
       saveToLocalStorage();
-      alert(t('success') + ' - تم حفظ السيرة كمسودة');
+      showNotification('تم حفظ السيرة كمسودة بنجاح', 'success');
     }
 
-    function exportPDF() {
-      alert('سيتم إضافة وظيفة تصدير PDF قريباً. يمكنك استخدام Ctrl+P أو Cmd+P للطباعة إلى PDF');
-      window.print();
+    function validateResumeData() {
+      const errors = [];
+      
+      if (!AppState.resumeData.personalInfo.fullName.trim()) {
+        errors.push('الاسم الكامل مطلوب');
+      }
+      
+      if (!AppState.resumeData.personalInfo.email.trim()) {
+        errors.push('البريد الإلكتروني مطلوب');
+      } else if (!isValidEmail(AppState.resumeData.personalInfo.email)) {
+        errors.push('البريد الإلكتروني غير صالح');
+      }
+      
+      if (errors.length > 0) {
+        showNotification(errors.join('\n'), 'error');
+        return false;
+      }
+      
+      return true;
+    }
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
     function handlePhotoUpload(event) {
@@ -2495,6 +4074,7 @@
         reader.onload = (e) => {
           AppState.resumeData.photo = e.target.result;
           saveToLocalStorage();
+          updatePreview();
         };
         reader.readAsDataURL(file);
       }
@@ -2505,15 +4085,21 @@
       AppState.userAuth.isLoggedIn = true;
       AppState.userAuth.username = event.target.email.value;
       saveToLocalStorage();
+      showNotification('تم تسجيل الدخول بنجاح', 'success');
       navigateTo('dashboard');
     }
 
     function handleSignup(event) {
       event.preventDefault();
-      // في تطبيق حقيقي، سيتم هنا إرسال البيانات إلى الخادم
-      alert('تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.');
+      showNotification('تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.', 'success');
       AppState.authMode = 'login';
       renderPage();
+    }
+
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      showNotification('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.', 'success');
+      event.target.reset();
     }
 
     function switchAuthMode(mode) {
@@ -2525,7 +4111,63 @@
       AppState.userAuth.isLoggedIn = false;
       AppState.userAuth.username = '';
       saveToLocalStorage();
+      showNotification('تم تسجيل الخروج بنجاح', 'success');
       navigateTo('home');
+    }
+
+    function toggleMobileMenu() {
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const overlay = document.querySelector('.mobile-menu-overlay');
+      
+      if (mobileMenu && overlay) {
+        mobileMenu.classList.toggle('active');
+        overlay.classList.toggle('active');
+      }
+    }
+
+    function closeMobileMenu() {
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const overlay = document.querySelector('.mobile-menu-overlay');
+      
+      if (mobileMenu && overlay) {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+      }
+    }
+
+    function updateMobileMenu() {
+      const menuContent = document.querySelector('.mobile-menu-content');
+      if (menuContent) {
+        menuContent.innerHTML = `
+          <a href="#" onclick="navigateTo('home'); closeMobileMenu();" class="nav-link">
+            <i class="fas fa-home"></i> ${t('home')}
+          </a>
+          <a href="#" onclick="navigateTo('builder'); closeMobileMenu();" class="nav-link">
+            <i class="fas fa-edit"></i> ${t('builder')}
+          </a>
+          <a href="#" onclick="navigateTo('templates'); closeMobileMenu();" class="nav-link">
+            <i class="fas fa-file-alt"></i> ${t('templates')}
+          </a>
+          <a href="#" onclick="navigateTo('contact'); closeMobileMenu();" class="nav-link">
+            <i class="fas fa-envelope"></i> ${t('contact')}
+          </a>
+          ${AppState.userAuth.isLoggedIn ? `
+            <a href="#" onclick="navigateTo('dashboard'); closeMobileMenu();" class="nav-link">
+              <i class="fas fa-tachometer-alt"></i> ${t('dashboard')}
+            </a>
+            <button class="btn btn-outline" onclick="logout(); closeMobileMenu();">
+              <i class="fas fa-sign-out-alt"></i> ${t('logout')}
+            </button>
+          ` : `
+            <button class="btn btn-primary" onclick="navigateTo('auth'); closeMobileMenu();">
+              <i class="fas fa-sign-in-alt"></i> ${t('login')}
+            </button>
+          `}
+          <button class="lang-toggle" onclick="toggleLanguage(); closeMobileMenu();">
+            <i class="fas fa-globe"></i> ${AppState.currentLanguage === 'ar' ? 'EN' : 'AR'}
+          </button>
+        `;
+      }
     }
 
     function attachEventListeners() {
@@ -2533,69 +4175,99 @@
       if (atsSelect) {
         atsSelect.addEventListener('change', (e) => {
           AppState.selectedATS = e.target.value;
-          renderPage();
+          saveToLocalStorage();
+          updatePreview();
+          showNotification(`تم تغيير نظام التوظيف إلى ${ATSSystems[e.target.value].name}`, 'success');
         });
       }
-    }
-
-    // Toggle main navigation on mobile
-    function toggleMobileNav() {
-      const mainNav = document.getElementById('main-nav');
-      if (!mainNav) return;
-      mainNav.classList.toggle('open');
     }
 
     function updatePageContent() {
       renderPage();
     }
 
-    // تصدير السيرة إلى PDF بدون رؤوس/تذييلات المتصفح
+    // ============ تصدير PDF محسّن ============
+
     function exportPDF() {
       const preview = document.getElementById('preview-section');
       if (!preview) {
-        alert('لا يوجد محتوى للمعاينة للتصدير');
+        showNotification('لا يوجد محتوى للمعاينة للتصدير', 'error');
         return;
       }
 
-      const doExport = () => {
-        const filename = (AppState.resumeData.personalInfo.fullName || 'cv') + '.pdf';
-        const opt = {
-          margin:       10, // mm
-          filename:     filename,
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, useCORS: true },
-          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
+      if (!validateResumeData()) {
+        return;
+      }
 
-        // استخدم html2pdf إذا كان متاحاً
-        if (typeof html2pdf !== 'undefined') {
-          html2pdf().set(opt).from(preview).save();
-        } else {
-          // تحميل المكتبة ديناميكياً ثم التصدير
-          const s = document.createElement('script');
-          s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-          s.onload = () => html2pdf().set(opt).from(preview).save();
-          s.onerror = () => { alert('فشل تحميل مكتبة التصدير. الرجاء تجربة الطباعة اليدوية مع إيقاف "Headers and footers".'); };
-          document.head.appendChild(s);
+      showLoadingIndicator(true);
+
+      const filename = (AppState.resumeData.personalInfo.fullName || 'cv') + '.pdf';
+      const atsSystem = ATSSystems[AppState.selectedATS];
+      
+      // إعدادات محسّنة للتصدير حسب نظام ATS
+      const opt = {
+        margin: atsSystem.name === 'Workday' || atsSystem.name === 'Oracle/Taleo' ? 5 : 10,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+          scale: 2, 
+          useCORS: true,
+          letterRendering: true,
+          logging: false
+        },
+        jsPDF: { 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait',
+          compress: true
+        },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      // إضافة كلاس خاص للطباعة
+      preview.classList.add('pdf-export');
+
+      const runExport = () => {
+        try {
+          html2pdf().set(opt).from(preview).save()
+            .then(() => {
+              preview.classList.remove('pdf-export');
+              showLoadingIndicator(false);
+              showNotification('تم تصدير السيرة الذاتية بنجاح', 'success');
+            })
+            .catch(error => {
+              preview.classList.remove('pdf-export');
+              showLoadingIndicator(false);
+              console.error('Export error:', error);
+              showNotification('فشل التصدير: ' + error.message, 'error');
+            });
+        } catch (error) {
+          preview.classList.remove('pdf-export');
+          showLoadingIndicator(false);
+          console.error('Export error:', error);
+          showNotification('خطأ في التصدير: ' + error.message, 'error');
         }
       };
 
-      doExport();
+      if (typeof html2pdf !== 'undefined') {
+        runExport();
+      } else {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+        s.onload = () => runExport();
+        s.onerror = () => {
+          preview.classList.remove('pdf-export');
+          showLoadingIndicator(false);
+          showNotification('فشل تحميل مكتبة التصدير', 'error');
+        };
+        document.head.appendChild(s);
+      }
     }
 
     // ============ تهيئة التطبيق ============
 
     function initApp() {
-      // تحميل البيانات المحفوظة
       loadFromLocalStorage();
-
-      // تحميل اللغة المحفوظة
-      const savedLang = localStorage.getItem('cv-studio-lang');
-      if (savedLang) {
-        AppState.currentLanguage = savedLang;
-        document.documentElement.lang = savedLang;
-        document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
-      }
 
       // إذا لم تكن هناك بيانات، استخدم البيانات الافتراضية
       if (!AppState.resumeData.personalInfo.fullName) {
@@ -2604,10 +4276,36 @@
 
       // عرض الصفحة الرئيسية
       renderPage();
+      
+      // تحديث المعاينة الأولية
+      setTimeout(() => {
+        if (AppState.currentPage === 'builder') {
+          updatePreview();
+        }
+      }, 500);
     }
 
     // تشغيل التطبيق عند تحميل الصفحة
     document.addEventListener('DOMContentLoaded', initApp);
+
+    // إغلاق القائمة المتنقلة عند الضغط خارجها
+    document.addEventListener('click', (e) => {
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const overlay = document.querySelector('.mobile-menu-overlay');
+      const toggleBtn = document.querySelector('.mobile-nav-toggle');
+      
+      if (mobileMenu && overlay && !mobileMenu.contains(e.target) && !toggleBtn.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+
+    // الحفظ التلقائي كل 30 ثانية
+    setInterval(() => {
+      if (AppState.currentPage === 'builder') {
+        saveToLocalStorage();
+        console.log('Auto-saved');
+      }
+    }, 30000);
   </script>
 </body>
 </html>
